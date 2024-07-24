@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/favicon.ico" type="image/ico">
+  <title>Restaurante - Descubra um novo conceito de gastronomia</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="container" id="responsivo">
+        <div id="botao_menu"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo"></div>
+      </div>
+      <div class="container" id="normal">
+        <div class="logo"></div>
+        <a href="pedidos.html">Pedidos</a>   
+        <a href="comprar.html">Comprar</a>
+        <a href="configuracoes.html">Configurações</a>     
+        <a id="sair_usuario"><i class="fa-solid fa-right-to-bracket"></i> Sair</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+	<section id="popup">
+        <div class="container">
+          <span id="botao_close"><i class="fa-solid fa-close"></i></span>
+          <article>
+              <span><i class="fa-solid fa-circle-exclamation"></i></span>
+              <h1>Atenção</h1>
+              <p id="erro_popup"></p>
+          </article>
+        </div>
+    </section>
+    <section id="configuracoes">
+      <h1>Configurações</h1>
+      <p style="text-align: center;">Para alterar um dado é necessário preencher todos os campos</p>
+      <div class="container">
+          <form id="configuracoes" name="configuracoes">
+              <ul>
+                <li>
+                  <label for="inputendereco">Endereço</label><br>
+                  <input type="text" placeholder="Seu Endereço" id="inputendereco" name="inputendereco">
+                </li>
+                <li>
+                  <label for="inputtelefone">Celular</label><br>
+                  <input type="text" placeholder="Seu número" id="inputtelefone" name="inputtelefone" pattern="^\(\d{2}\)\s\d{5}-\d{4}$" required>
+                </li>
+                <li>
+                  <label for="inputemail">E-mail</label><br>
+                  <input type="email" placeholder="Seu e-mail" id="inputemail" name="inputemail" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+                </li>
+                <li>
+                  <label for="inputsenha">Senha</label><br>
+                  <input type="password" placeholder="Sua senha" id="inputsenha" name="inputsenha" pattern="^.{8,}$" required>
+                </li>
+              </ul>
+              <center>
+                <button id="botao_enviar">Atualizar</button>
+              </center>
+          </form>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <center>
+      <p>Todos os direitos reservados</p>
+      <div class="itens">
+          <a href=""><i class="fa-brands fa-facebook"></i></a>
+        | <a href=""><i class="fa-brands fa-instagram"></i></a>
+        | <a href=""><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </center>
+  </footer>
+  <script src="assets/js/menu.js" type="module"></script>
+  <script src="assets/js/configurar_usuario.js" type="module"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+  <script type="text/javascript">
+    $("#inputtelefone").mask("(00) 00000-0000");
+   </script>
+</body>
+</html>

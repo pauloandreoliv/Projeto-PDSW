@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style_admin.css">
+  <link rel="icon" href="assets/img/favicon.ico" type="image/ico">
+  <title>Restaurante - Descubra um novo conceito de gastronomia</title>
+</head>
+<body>
+  <header>
+      <nav id="responsivo">
+        <div class="container" id="fixa">
+          <div id="botao_menu"><i class="fa-solid fa-bars"></i></div>
+        </div>
+        <div id="invisivel">
+          <a href="admin_index.html">Início</a>
+          <a href="admin_pedidos.html">Pedidos</a>
+          <a href="admin_adicionar.html">Adicionar</a>
+          <a href="admin_cardapio.html">Cardápio</a>
+          <a href="admin_promocoes.html">Promoções</a>
+          <a id="sair_admin"> Sair</a>
+        </div>
+      </nav>
+  </header>
+  <main>
+    <section class="esquerda" id="esquerda">
+      <div class="logo"></div>
+      <nav>
+        <ul>
+           <a href="admin_index.html"><li><i class="fa-solid fa-house"></i> Início</li></a>
+           <a href="admin_pedidos.html"><li><i class="fa-solid fa-receipt"></i> Pedidos</li></a>
+           <a href="admin_adicionar.html"><li><i class="fa-solid fa-plus"></i> Adicionar</li></a>
+           <a href="admin_cardapio.html"><li><i class="fa-solid fa-utensils"></i> Cardápio</li></a>
+           <a href="admin_promocoes.html"><li><i class="fa-solid fa-percent"></i> Promoções</li></a>
+           <a id="sair_admin_normal"><li><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</li></a>
+          </ul>
+        </nav>
+    </section>
+    <section class="direita">
+      <div class="container">
+        <h1 id="titulo">Olá, seja bem-vindo(a)!</h1>
+      </div>
+      <div class="container">
+        <article class="box_index">
+          <h4>Hoje é</h4>
+          <h2 id="nome_dia">Sexta-feira</h2>
+        </article>
+        <article class="box_index" id="com_img">
+          <h4>Que tal fazer uma promoção?</h4>
+          <a href="admin_promocoes.html"><button>Criar</button></a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <center>
+      <p>Todos os direitos reservados</p>
+      <p>Desenvolvido por <i class="fa-brands fa-github"></i> pauloandreoliv</p>
+    </center>
+  </footer>
+  <script src="assets/js/menuAdmin.js"></script>
+  <script src="assets/js/logado_admin.js"></script>
+</body>
+</html>

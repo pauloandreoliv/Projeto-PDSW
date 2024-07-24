@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/favicon.ico" type="image/ico">
+  <title>Restaurante - Descubra um novo conceito de gastronomia</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="container" id="responsivo">
+        <div id="botao_menu"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo"></div>
+      </div>
+      <div class="container" id="normal">
+        <div class="logo"></div>
+        <a href="pedidos.html">Pedidos</a>   
+        <a href="comprar.html">Comprar</a>
+        <a href="configuracoes.html">Configurações</a>     
+        <a id="sair_usuario"><i class="fa-solid fa-right-to-bracket"></i> Sair</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section id="popup">
+      <div class="container">
+        <span id="botao_close"><i class="fa-solid fa-close"></i></span>
+        <article>
+            <span><i class="fa-solid fa-circle-exclamation"></i></span>
+            <h1>Atenção</h1>
+            <p id="erro_popup"></p>
+        </article>
+      </div>
+    </section>
+    <section id="pedido">
+      <h1>Pedido</h1>
+      <div class="container">
+          <form name="pagamento" id="pagamento">
+            <center>
+              <label for="select_formadepg">Pagamento:</label><br>
+                <select id="select_formadepg" name="select_formadepg">
+                      <option value="SELECIONE">SELECIONE</option>
+                      <option value="pix">PIX</option>
+                      <option value="dinheiro">DINHEIRO</option>
+                      <option value="cartao">CARTÃO</option>
+                    </select>
+            </center>
+          </form>
+      </div>
+      <div class="container" id="botoes">
+        <button id="botao_comprar"><i class="fa-solid fa-cart-shopping"></i> Comprar</button>
+        <button id="botao_limpar"><i class="fa-solid fa-trash"></i> Limpar</button>
+      </div>
+      <div class="container" id="pedidos">
+            <article>
+                <h4>Nome do produto</h4>
+                <h5>R$00,00</h5>
+            </article>
+        </div>
+    </section>
+    <section id="cardapio">
+      <h1>Comprar</h1>
+      <div class="container" id="mostrarPratosComprar">
+        <article class="box_produto">
+          <div class="topo">
+            <div class="imagem" style="background-image: url(https://i.imgur.com/ea9iuwp.jpg);"></div>
+          </div>
+          <div class="info">
+            <p>Produto de exemplo</p>
+            <h5>R$49,90</h5>
+          </div>
+          <button id="botao_comprar">Comprar</button>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <center>
+      <p>Todos os direitos reservados</p>
+      <div class="itens">
+          <a href=""><i class="fa-brands fa-facebook"></i></a>
+        | <a href=""><i class="fa-brands fa-instagram"></i></a>
+        | <a href=""><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </center>
+  </footer>
+  <script src="assets/js/menu.js" type="module"></script>
+  <script src="assets/js/mostrar_pratosepromocoes.js" type="module"></script>
+  <script src="assets/js/pedido.js" type="module"></script>
+</body>
+</html>

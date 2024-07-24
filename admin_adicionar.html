@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style_admin.css">
+  <link rel="icon" href="assets/img/favicon.ico" type="image/ico">
+  <title>Restaurante - Descubra um novo conceito de gastronomia</title>
+</head>
+<body>
+    <header>
+      <nav id="responsivo">
+        <div class="container" id="fixa">
+          <div id="botao_menu"><i class="fa-solid fa-bars"></i></div>
+        </div>
+        <div id="invisivel">
+          <a href="admin_index.html">Início</a>
+          <a href="admin_pedidos.html">Pedidos</a>
+          <a href="admin_adicionar.html">Adicionar</a>
+          <a href="admin_cardapio.html">Cardápio</a>
+          <a href="admin_promocoes.html">Promoções</a>
+          <a id="sair_admin"> Sair</a>
+        </div>
+      </nav>
+  </header>
+  <main>
+	<section id="popup">
+        <div class="container">
+          <span id="botao_close"><i class="fa-solid fa-close"></i></span>
+          <article>
+              <span><i class="fa-solid fa-circle-exclamation"></i></span>
+              <h1>Atenção</h1>
+              <p id="erro_popup"></p>
+          </article>
+        </div>
+    </section>
+    <section class="esquerda" id="esquerda">
+      <div class="logo"></div>
+      <nav>
+        <ul>
+          <a href="admin_index.html"><li><i class="fa-solid fa-house"></i> Início</li></a>
+          <a href="admin_pedidos.html"><li><i class="fa-solid fa-receipt"></i> Pedidos</li></a>
+          <a href="admin_adicionar.html"><li><i class="fa-solid fa-plus"></i> Adicionar</li></a>
+          <a href="admin_cardapio.html"><li><i class="fa-solid fa-utensils"></i> Cardápio</li></a>
+          <a href="admin_promocoes.html"><li><i class="fa-solid fa-percent"></i> Promoções</li></a>
+          <a id="sair_admin_normal"><li><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</li></a>
+         </ul>
+        </nav>
+    </section>
+    <section class="direita" id="adicionar">
+      <h1>Adicionar</h1>
+      <div class="container">
+        <form id="inserir" name="inserir">
+          <ul>
+            <li>
+              <label for="inputnome">Nome:</label>
+              <input type="text" id="inputnome" name="inputnome">
+            </li>
+            <li>
+              <label for="inputvalor">Valor:</label>
+              <input type="number" id="inputvalor" name="inputvalor">
+            </li>
+            <li>
+              <label for="inputurl">URL da Imagem:</label>
+              <input type="url" id="inputurl" name="inputurl" pattern="^(https?:\/\/|ftp:\/\/)?(www\.)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(\/\S*)?$" required>
+            </li>
+          </ul>
+          <center>
+            <button type="submit" id="botao_enviar">Enviar</button>
+          </center>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <center>
+      <p>Todos os direitos reservados</p>
+    </center>
+  </footer>
+  <script src="assets/js/menuAdmin.js"></script>
+  <script src="assets/js/inserir_prato.js" type="module"></script>
+  <script src="assets/js/logado_admin.js"></script>
+</body>
+</html>
