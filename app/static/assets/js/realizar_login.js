@@ -56,7 +56,7 @@ entrarButton.addEventListener('click', (event) => {
                         localStorage.setItem('telefone', telefone);
                         localStorage.setItem('logado', 'true');
                         mostrarPopup("Logado com sucesso");
-                        setTimeout(() => {  window.location.href = "pedidos.html"; }, 2000);
+                        setTimeout(() => {  window.location.href = "pedidos"; }, 2000);
                     } else {
                         mostrarPopup("Senha incorreta");
                     }

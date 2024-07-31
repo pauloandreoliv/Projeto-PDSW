@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="icon" href="assets/img/favicon.ico" type="image/ico">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}" type="image/ico">
   <title>Restaurante - Descubra um novo conceito de gastronomia</title>
 </head>
 <body>
@@ -20,9 +20,9 @@
       </div>
       <div class="container" id="normal">
         <div class="logo"></div>
-        <a href="pedidos.html">Pedidos</a>   
-        <a href="comprar.html">Comprar</a>
-        <a href="configuracoes.html">Configurações</a>     
+        <a href="pedidos">Pedidos</a>   
+        <a href="comprar">Comprar</a>
+        <a href="configuracoes">Configurações</a>     
         <a id="sair_usuario"><i class="fa-solid fa-right-to-bracket"></i> Sair</a>
       </div>
     </nav>
@@ -78,7 +78,7 @@
       </div>
     </center>
   </footer>
-  <script src="assets/js/menu.js" type="module"></script>
+  <script src="{{ url_for('static', filename='assets/js/menu.js') }}" type="module"></script>
   <script src="assets/js/configurar_usuario.js" type="module"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
