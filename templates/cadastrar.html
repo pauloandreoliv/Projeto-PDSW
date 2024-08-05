@@ -27,7 +27,7 @@
       <div class="container">
         <div class="opcoes">
           <span><a href="index.html"><i class="fa-solid fa-house"></i></a> Início</span>
-          <span><a href="entrar.html "><i class="fa-solid fa-right-to-bracket"></i></a> Entrar</span>
+          <span><a href="{{ url_for('api.entrar') }}"><i class="fa-solid fa-right-to-bracket"></i></a> Entrar</span>
         </div>
       </div>
       <div class="container">
@@ -63,7 +63,9 @@
                 </li>
               </ul>
               <center>
-                <button id="botao_enviar">Cadastrar</button><br>
+                <form action="{{ url_for('api.entrar') }}" method="get">
+                  <button id="botao_enviar">Cadastrar</button><br>
+              </form>
               </center>
             </form>
           </div>

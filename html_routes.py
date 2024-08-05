@@ -1,63 +1,68 @@
-from flask import render_template
-from . import api
+from flask import render_template, Blueprint
 
-@api.route("/")
+html_routes = Blueprint('html_routes', __name__)
+
+@html_routes.route("/")
 def index():
     return render_template("index.html")
 
-@api.route("/admin")
+@html_routes.route("/admin")
 def admin():
     return render_template("admin.html")
 
-@api.route("/entrar")
+@html_routes.route("/entrar")
 def entrar():
     return render_template("entrar.html")
 
-@api.route("/localizacao")
+@html_routes.route("/localizacao")
 def localizacao():
     return render_template("localizacao.html")
 
-@api.route("/pedidos")
+@html_routes.route("/pedidos")
 def pedidos():
     return render_template("pedidos")
 
-@api.route("/admin_adicionar")
+@html_routes.route("/admin_adicionar")
 def admin_adicionar():
     return render_template("admin_adicionar")
 
-@api.route("/admin_cardapio")
+@html_routes.route("/admin_cardapio")
 def admin_cardapio():
     return render_template("admin_cardapio")
 
-@api.route("/admin_index")
+@html_routes.route("/admin_index")
 def admin_index():
     return render_template("admin_index")
 
-@api.route("/admin_pedidos")
+@html_routes.route("/admin_pedidos")
 def admin_pedidos():
     return render_template("admin_pedidos")
 
-@api.route("/admin_promocoes")
+@html_routes.route("/admin_promocoes")
 def admin_promocoes():
     return render_template("admin_promocoes")
 
-@api.route("/admin_verpromocoes")
+@html_routes.route("/admin_verpromocoes")
 def admin_verpromocoes():
     return render_template("admin_verpromocoes.html")
 
-@api.route("/cadastrar")
+@html_routes.route("/cadastrar" )
 def cadastrar():
     return render_template("cadastrar.html")
 
 
-@api.route("/cardapio")
+@html_routes.route("/cardapio")
 def cardapio():
     return render_template("cardapio.html")
 
-@api.route("/comprar")
+@html_routes.route("/comprar")
 def comprar():
     return render_template("comprar")
 
-@api.route("/configuracoes")
+@html_routes.route("/configuracoes")
 def configuracoes():
     return render_template("configuracoes")
+
+@html_routes.route("/teste")
+def teste():
+    return "Rota de teste funcionando!"
