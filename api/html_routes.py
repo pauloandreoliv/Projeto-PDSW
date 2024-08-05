@@ -3,6 +3,10 @@ from flask import render_template, Blueprint
 html_routes = Blueprint('html_routes', __name__)
 
 @html_routes.route("/")
+def inicio():
+    return render_template("index.html")
+
+@html_routes.route("/index")
 def index():
     return render_template("index.html")
 

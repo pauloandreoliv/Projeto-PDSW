@@ -1,10 +1,12 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, db
 
+
+
 def initialize_firebase():
     cred = credentials.Certificate('api\key\key.json')
     firebase_admin.initialize_app(cred)
-    
+
     db = firestore.client()
 
 def create_admin(cpf, senha):

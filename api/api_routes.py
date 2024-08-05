@@ -1,5 +1,4 @@
 from flask import jsonify, Blueprint, request
-from . import forms
 from . import firebase_service
 
 api_routes = Blueprint('api_routes', __name__)

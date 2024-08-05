@@ -26,8 +26,8 @@
     <section id="login">
       <div class="container">
         <div class="opcoes">
-          <span><a href="index.html"><i class="fa-solid fa-house"></i></a> Início</span>
-          <span><a href="{{ url_for('api.entrar') }}"><i class="fa-solid fa-right-to-bracket"></i></a> Entrar</span>
+          <span><a href="{{ url_for('html_routes.index') }}"><i class="fa-solid fa-house"></i></a> Início</span>
+          <span><a href="{{ url_for('html_routes.entrar') }}"><i class="fa-solid fa-right-to-bracket"></i></a> Entrar</span>
         </div>
       </div>
       <div class="container">
@@ -63,7 +63,7 @@
                 </li>
               </ul>
               <center>
-                <form action="{{ url_for('api.entrar') }}" method="get">
+                <form action="{{ url_for('html_routes.entrar') }}" method="get">
                   <button id="botao_enviar">Cadastrar</button><br>
               </form>
               </center>
