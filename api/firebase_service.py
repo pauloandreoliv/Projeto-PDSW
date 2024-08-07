@@ -2,11 +2,10 @@ import firebase_admin
 from firebase_admin import credentials, firestore, db
 
 
-
 def initialize_firebase():
     cred = credentials.Certificate('api\key\key.json')
     firebase_admin.initialize_app(cred)
-
+    global db
     db = firestore.client()
 
 def create_admin(cpf, senha):
@@ -46,8 +45,8 @@ def add_promotion(nome, url_img, valor):
         'valor': valor
     })
 
-def delete_promotion(promotion_id):
-    doc_ref = db.collection('promocao').document(promotion_id)
+def delete_promotion(id):
+    doc_ref = db.collection('promocao').document(id)
     doc_ref.delete()
 
 
@@ -58,28 +57,29 @@ def add_unidade(nome, url_img, endereco):
         'endereco': endereco
     })
 
-def create_pedido(cpf, data, endereco, formadepgmto, id, pratos, telefone_cliente, total):
+def delete_restaurant(id):
+    doc_ref = db.collection('unidade').document(id)
+    doc_ref.delete()
+
+def create_pedido(cpf, data, endereco, formadepgmto, pratos, telefone_cliente, total):
     doc_ref = db.collection('pedido').add({
         'cpf': cpf,
         'data': data,
         'endereco': endereco,
         'formadepgmto': formadepgmto,
-        'id': id,
         'pratos': pratos,
         'telefone_cliente': telefone_cliente,
         'total': total
     })
 
-def user_exists(cpf):
-    user_ref = db.collection('usuario').where('cpf', '==', cpf).get()
-    return len(user_ref) > 0
-
-def admin_exists(cpf):
-    admin_ref = db.collection('admin').where('cpf', '==', cpf).get()
-    return len(admin_ref) > 0
-
-def prato_exists(nome):
-    prato_ref = db.collection('prato').where('nome', '==', nome).get()
-    return len(prato_ref) > 0
-
-
+def update_user(cpf, update_data ):
+    doc_ref = db.collection('usuario')
+    query = doc_ref.where('cpf', '==', cpf).stream()
+    user_docs = list(query)
+    if not user_docs:
+        return False, "Usuário não encontrado"
+    else :  
+        user_doc = user_docs[0]
+        user_ref = doc_ref.document(user_doc.id)
+        user_ref.update(update_data)
+        return True, "Usuário atualizado com sucesso"
