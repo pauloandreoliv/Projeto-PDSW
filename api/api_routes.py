@@ -2,10 +2,29 @@ from datetime import datetime, timedelta, timezone
 from venv import logger
 from flask import jsonify, Blueprint, request
 from . import firebase_service
+from .token import authentication
 
 api_routes = Blueprint('api_routes', __name__)
 
 #-------------------------------Area Cliente--------------------------------------
+
+@api_routes.route('/loginUser', methods=['POST'])
+def login():
+    try:
+        id = request.json['cpf']
+        senha = request.json['senha']
+        type = "usuario"
+        dados = firebase_service.FindByid(id, type)
+        
+        if firebase_service.returnPassoword(dados, senha):
+            logger.info('Logado com sucesso')
+            token = authentication.gerar_token(dados['id'])
+            return jsonify({"id": dados['id'], "token": token}), 200
+        else:
+            return jsonify({"error": "Acesso negado. Dados inválidos."}), 401
+    except Exception as e:
+        logger.error(f"An Error Occurred: {e}")
+        return f"An Error Occurred: {e}", 500
 
 @api_routes.route("/add_User", methods=['POST'])
 def create_client():
@@ -31,7 +50,6 @@ def update_user(cpf):
         return f"An Error Occurred: {e}", 500
 
 
-#adicionar produto no carrinho 
 @api_routes.route("/add_pedido", methods=['POST'])
 def create__pedido():
     now = datetime.now(timezone.utc)
@@ -52,7 +70,7 @@ def create__pedido():
         return jsonify({'message': 'Pedido criado com sucesso!'}), 200
     except Exception as e:
         return jsonify({'message': str(e)}), 500
-
+    
 
 #total do carrinho 
 
@@ -63,6 +81,7 @@ def create__pedido():
 #excluir pedido do carrinho
 
 
+#visualização historico de produtos do cliente
 
 
 #-------------------------------Area ADMIN--------------------------------------
@@ -76,6 +95,25 @@ def cadastar_admin():
     firebase_service.create_admin(cpf,senha)
 
     return jsonify({'message': 'Cadastro realizado com sucesso!'}), 200
+
+@api_routes.route('/loginAdm', methods=['POST'])
+def loginAdmin():
+    try:
+        cpf = request.json['cpf']
+        senha = request.json['senha']
+        type = "admin"
+        dados = firebase_service.FindByid(cpf,type)
+    
+
+        if firebase_service.returnPassoword(dados, senha ):
+            logger.info('Logado com sucesso')
+            token = authentication.gerar_token(dados['id'])
+            return jsonify({"id": dados['id'], "token": token}), 200
+        else:
+            return jsonify({"error": "Acesso negado. Dados inválidos."}), 401
+    except Exception as e:
+        logger.error(f"An Error Occurred: {e}")
+        return f"An Error Occurred: {e}", 500
 
 
 #-------------------------------Area Produdo--------------------------------------
@@ -148,16 +186,9 @@ def delete_restaurant(nome):
         return jsonify({'message': str(e)}), 500
 
 
-
-
-
-#Login
-
-
 #retonar unidades
 
 
-#visualização historico de produtos do cliente
 
 
 

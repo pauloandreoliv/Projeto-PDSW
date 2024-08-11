@@ -83,3 +83,21 @@ def update_user(cpf, update_data ):
         user_ref = doc_ref.document(user_doc.id)
         user_ref.update(update_data)
         return True, "Usuário atualizado com sucesso"
+     
+def FindByCpf(cpf, type):
+    if type == "admin":
+        doc_ref = db.collection('admin')
+    elif type == "usuario":
+        doc_ref = db.collection('usuario')
+
+    query = doc_ref.where('cpf', '==', cpf).stream()
+    user_docs = list(query)
+    if not user_docs:
+        return False, "Usuário não encontrado"
+    else :  
+        user_doc = user_docs[0]
+        user_ref = doc_ref.document(user_doc.id)
+        return user_ref
+
+def returnPassoword(dados, senha):
+    return dados and dados.get('senha') == senha
