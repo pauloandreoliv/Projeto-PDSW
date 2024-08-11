@@ -99,5 +99,5 @@ def FindByCpf(cpf, type):
         user_ref = doc_ref.document(user_doc.id)
         return user_ref
 
-def returnPassoword(dados, senha):
+def returnPassword(dados, senha):
     return dados and dados.get('senha') == senha

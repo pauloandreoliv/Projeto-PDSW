@@ -16,7 +16,7 @@ def login():
         type = "usuario"
         dados = firebase_service.FindByid(id, type)
         
-        if firebase_service.returnPassoword(dados, senha):
+        if firebase_service.returnPassword(dados, senha):
             logger.info('Logado com sucesso')
             token = authentication.gerar_token(dados['id'])
             return jsonify({"id": dados['id'], "token": token}), 200
@@ -105,7 +105,7 @@ def loginAdmin():
         dados = firebase_service.FindByid(cpf,type)
     
 
-        if firebase_service.returnPassoword(dados, senha ):
+        if firebase_service.returnPassword(dados, senha ):
             logger.info('Logado com sucesso')
             token = authentication.gerar_token(dados['id'])
             return jsonify({"id": dados['id'], "token": token}), 200
