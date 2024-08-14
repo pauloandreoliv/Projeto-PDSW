@@ -14,7 +14,7 @@ if (!(linkMenu === null)){
     event.preventDefault();
     
     sair();
-    window.location.href = "index.html";
+    window.location.href = "/";
     
   });
 }

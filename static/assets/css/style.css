@@ -7,7 +7,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px; 
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -26,7 +26,7 @@ html {
   scroll-behavior: smooth;
 }
 
-body{
+body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   background-color: var(--fundo);
@@ -56,8 +56,8 @@ nav {
 }
 
 .container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 nav .logo {
@@ -72,13 +72,14 @@ nav .logo {
   transition: 0.25s;
 }
 
-nav .logo:hover{
+nav .logo:hover {
   opacity: 0.5;
 }
 
 nav #responsivo {
   display: none;
 }
+
 nav #normal {
   display: flex;
 }
@@ -121,7 +122,7 @@ section {
   padding-top: 50px;
 }
 
-section h1{
+section h1 {
   text-align: center;
 }
 
@@ -145,22 +146,22 @@ section#inicial h1 span {
 }
 
 #foto_inicial {
-  width: 600px;
-   height: 600px;
-   float: right;
-   margin-top: -120px;
-   background-image: url(https://i.imgur.com/YzLElFW.png);
-   background-size: 97% 80%;
-   background-repeat: no-repeat;
-   background-position:
-center;
-   cursor: pointer;
+  width: 850px;
+  height: 700px;
+  float: right;
+  margin-top: -50px;
+  background-image: url(https://www.imagensempng.com.br/wp-content/uploads/2021/06/02-25.png);
+  background-size: 97% 80%;
+  background-repeat: no-repeat;
+  background-position:
+    center;
+  cursor: pointer;
 }
 
 section#aviso {
-    color: white;
-    background: var(--corsecundaria);
-    height: 200px;
+  color: white;
+  background: var(--corsecundaria);
+  height: 200px;
 }
 
 section#aviso button {
@@ -168,12 +169,14 @@ section#aviso button {
   color: var(--corsecundaria);
 }
 
-section#cardapio, section#promocoes {
+section#cardapio,
+section#promocoes {
   flex-wrap: wrap;
   align-items: center;
 }
 
-section#cardapio .container, section#promocoes .container {
+section#cardapio .container,
+section#promocoes .container {
   flex-wrap: wrap;
 }
 
@@ -216,6 +219,7 @@ section#cardapio .container, section#promocoes .container {
   max-height: 40px;
   overflow-y: scroll;
 }
+
 .box_produto button {
   margin-left: 110px;
 }
@@ -248,7 +252,7 @@ section#localizacao {
   align-items: center;
 }
 
-section#localizacao .container{
+section#localizacao .container {
   flex-wrap: wrap;
 }
 
@@ -285,7 +289,7 @@ section#sobre .linhadotempo {
   max-width: 800px;
   margin: 0 auto;
 }
-    
+
 section#sobre .linhadotempo::before {
   content: '';
   position: absolute;
@@ -296,17 +300,17 @@ section#sobre .linhadotempo::before {
   height: 100%;
   background-color: silver;
 }
-    
+
 section#sobre .linhadotempo .box_evento {
   position: relative;
   padding: 40px 20px;
 }
- 
+
 section#sobre .linhadotempo .box_evento h2 {
   text-align: center;
   background: var(--fundo);
 }
-	
+
 section#sobre .linhadotempo .box_evento::before {
   content: '';
   position: absolute;
@@ -318,12 +322,12 @@ section#sobre .linhadotempo .box_evento::before {
   border-radius: 50%;
   background-color: silver;
 }
-    
+
 section#sobre .linhadotempo .box_evento .data {
   font-weight: bold;
   margin-bottom: 10px;
 }
-    
+
 section#sobre .linhadotempo .box_evento .conteudo {
   padding: 10px;
   background-color: var(--fundo);
@@ -379,7 +383,8 @@ section#login .container .opcoes span:hover {
   font-size: 13px;
 }
 
-section#login .container .opcoes span:hover a, section#login .container .opcoes span:hover i {
+section#login .container .opcoes span:hover a,
+section#login .container .opcoes span:hover i {
   color: var(--corsecundaria);
 }
 
@@ -399,6 +404,7 @@ section#login .box_login button {
 section#login .box_login a {
   font-size: 12px;
 }
+
 section#login .box_login .direita {
   background-color: white;
   min-height: 400px;
@@ -448,12 +454,12 @@ body#admin section#login .direita center span {
 }
 
 input {
-	max-width: 180px;
-    padding: 10px;
-    border: none;
-    background-color: #f7f7f7;
-    color: #9b9b9b;
-    font-family: 'Poppins', sans-serif;
+  max-width: 180px;
+  padding: 10px;
+  border: none;
+  background-color: #f7f7f7;
+  color: #9b9b9b;
+  font-family: 'Poppins', sans-serif;
 }
 
 section#pedidos {
@@ -461,7 +467,7 @@ section#pedidos {
   align-items: center;
 }
 
-section#pedidos .container{
+section#pedidos .container {
   flex-wrap: wrap;
 }
 
@@ -491,74 +497,76 @@ section#configuracoes ul li input {
 
 @media (max-width: 768px) {
   .container {
-      display: flex;
-      justify-content: center;
-      flex-flow: column;
-      overflow: hidden;
-    }
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    overflow: hidden;
+  }
 
-    nav #responsivo {
-      display: block;
-    }
-    
-    nav #normal {
-      display: none;
-    }
+  nav #responsivo {
+    display: block;
+  }
 
-    nav #normal .logo{
-      display: none;
-    }
+  nav #normal {
+    display: none;
+  }
 
-     section#pedidos .container{
-      align-items: center;
-    }
+  nav #normal .logo {
+    display: none;
+  }
 
-    section#cardapio .container, section#promocoes .container{
-      align-items: center;
-    }
+  section#pedidos .container {
+    align-items: center;
+  }
 
-    section#localizacao .container{
-      align-items: center;
-    }
+  section#cardapio .container,
+  section#promocoes .container {
+    align-items: center;
+  }
 
-    section#configuracoes .container{
-      align-items: center;
-    }
+  section#localizacao .container {
+    align-items: center;
+  }
 
-    section#login .container{
-      align-items: center;
-    }
+  section#configuracoes .container {
+    align-items: center;
+  }
 
-    section#login .box_login {
-      width: 280px;
-    }
+  section#login .container {
+    align-items: center;
+  }
 
-    section#login .box_login .esquerda {
-      width: 0%;
-      display: none;
-    }
+  section#login .box_login {
+    width: 280px;
+  }
 
-    section#login .box_login#cadastro .esquerda {
-      width: 0%;
-      display: none;
-    }
-    section#login .box_login .direita {
-      width: 100%;
-    }
+  section#login .box_login .esquerda {
+    width: 0%;
+    display: none;
+  }
 
-    #foto_inicial {
-      width: 600px;
-       height: 600px;
-       float: right;
-       margin-top: -250px;
-       background-image: url(https://i.imgur.com/YzLElFW.png);
-       background-size: 85%;
-       background-position:
-bottom;
-       transition:
-0.5s;
-       cursor: pointer;
-    }
+  section#login .box_login#cadastro .esquerda {
+    width: 0%;
+    display: none;
+  }
+
+  section#login .box_login .direita {
+    width: 100%;
+  }
+
+  #foto_inicial {
+    width: 850px;
+    height: 700px;
+    float: right;
+    margin-top: -250px;
+    background-image: url(https://www.imagensempng.com.br/wp-content/uploads/2021/06/02-25.png);
+    background-size: 85%;
+    background-position:
+      bottom;
+    transition:
+      0.5s;
+    cursor: pointer;
+  }
 }
 
 #popup {

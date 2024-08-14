@@ -20,9 +20,9 @@
       </div>
       <div class="container" id="normal">
         <div class="logo"></div>
-        <a href="index.html">Início</a>
-        <a href="cardapio.html">Cardápio</a>
-        <a href="localizacao.html">Localização</a>
+        <a href="/">Início</a>
+        <a href="{{ url_for('html_routes.cardapio') }}">Cardápio</a>
+        <a href="{{ url_for('html_routes.localizacao') }}">Localização</a>
         <a id="logado"></a>
       </div>
     </nav>

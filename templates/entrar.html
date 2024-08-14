@@ -26,7 +26,7 @@
     <section id="login">
       <div class="container">
         <div class="opcoes">
-          <a href="{{ url_for('html_routes.index') }}"><span><i class="fa-solid fa-house"></i> Início</span></a>
+          <a href="/"><span><i class="fa-solid fa-house"></i> Início</span></a>
           <a href="{{ url_for('html_routes.admin') }}"><span><i class="fa-solid fa-lock"></i> Interno</span></a>
         </div>
       </div>
@@ -48,7 +48,7 @@
               </ul>
               <center>
                 <button id="botao_enviar">Entrar</button><br>
-                <a href="cadastrar.html">Criar conta</a>
+                <a href="{{ url_for('html_routes.cadastrar') }}">Criar conta</a>
               </center>
             </form>
           </div>

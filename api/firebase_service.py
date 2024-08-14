@@ -26,13 +26,13 @@ def create_user(cpf, nome, email, endereco, telefone, senha):
         'senha': senha
     })
 
-def add_prato (nome, url_img, valor):
-
+def add_prato (valor, nome, url_img):
     doc_ref = db.collection('prato').add({
         'nome': nome,
         'url_img': url_img,
         'valor': valor
     })
+    #doc_id = doc_ref[1].id 
 
 def delete_prato(prato_id):
     doc_ref = db.collection('prato').document(prato_id)
@@ -61,10 +61,10 @@ def delete_restaurant(id):
     doc_ref = db.collection('unidade').document(id)
     doc_ref.delete()
 
-def create_pedido(cpf, data, endereco, formadepgmto, pratos, telefone_cliente, total):
+def create_pedido(cpf, formatted_date, endereco, formadepgmto, pratos, telefone_cliente, total):
     doc_ref = db.collection('pedido').add({
         'cpf': cpf,
-        'data': data,
+        'data': formatted_date,
         'endereco': endereco,
         'formadepgmto': formadepgmto,
         'pratos': pratos,
@@ -101,3 +101,39 @@ def FindByCpf(cpf, type):
 
 def returnPassword(dados, senha):
     return dados and dados.get('senha') == senha
+
+
+def Get_unidades():
+    unidades_ref = db.collection('unidade').stream()
+    unidades = []
+    for unidade in unidades_ref:
+        unidade_data = unidade.to_dict()
+        unidades.append(unidade_data)
+    return unidades
+    
+
+def Get_pratos():
+    pratos_ref = db.collection('prato').stream()
+    pratos = []
+    for prato in pratos_ref:
+        prato_data = prato.to_dict()
+        prato_data['id'] = prato.id  
+        pratos.append(prato_data)
+    return pratos
+
+def Get_promocoes():
+    promocoes_ref = db.collection('promocao').stream()
+    promocoes = []
+    for promocao in promocoes_ref:
+        promocao_data = promocao.to_dict()
+        promocao_data['id'] = promocao.id 
+        promocoes.append(promocao_data)
+    return promocoes
+
+def Get_pedidos(cpf):
+    pedidos_ref = db.collection('pedidos').where('cpf', '==', cpf).stream()
+    historico = []
+    for pedido in pedidos_ref:
+        pedido_data = pedido.to_dict()
+        historico.append(pedido_data)
+    return historico

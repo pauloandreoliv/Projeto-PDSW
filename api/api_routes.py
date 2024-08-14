@@ -55,34 +55,30 @@ def create__pedido():
     now = datetime.now(timezone.utc)
     offset = timedelta(hours=-3)
     now_local = now + offset
-    formatted_date = now_local.strftime("%d de %B de %Y às %H:%M:%S") + " UTC-3"#####----verificar----#####
+    formatted_date = now_local.strftime("%d de %B de %Y às %H:%M:%S") + " UTC-3"
 
     data = request.json
     cpf = data.get('cpf')
-    data_now = data.get(formatted_date)
     endereco = data.get('endereco')
     formadepgmto = data.get('formadepgmto')
     pratos = data.get('pratos')
     telefone_cliente = data.get('telefone_cliente')
     total = data.get('total')
     try :
-        firebase_service.create_pedido(cpf, data_now, endereco, formadepgmto, pratos, telefone_cliente, total)
+        firebase_service.create_pedido(cpf, formatted_date, endereco, formadepgmto, pratos, telefone_cliente, total)
         return jsonify({'message': 'Pedido criado com sucesso!'}), 200
     except Exception as e:
         return jsonify({'message': str(e)}), 500
     
-
-#total do carrinho 
-
-
-#listar carrinho 
-
-
-#excluir pedido do carrinho
-
-
-#visualização historico de produtos do cliente
-
+@api_routes.route('/historico', methods=['GET'])
+def visualizar_historico_produtos():
+    try:
+        cpf = request.args.get('cpf')
+        historico = firebase_service.Get_pedidos(cpf)
+        return jsonify({"historico": historico}), 200
+    except Exception as e:
+        logger.error(f"An Error Occurred: {e}")
+        return f"An Error Occurred: {e}", 500
 
 #-------------------------------Area ADMIN--------------------------------------
 
@@ -138,6 +134,16 @@ def remove_prato(prato_id):
         return jsonify({'message': str(e)}), 500
 
 
+@api_routes.route('/get_pratos', methods=['GET'])
+def get_pratos():
+    try:
+        pratos = firebase_service.Get_pratos()  
+        return jsonify(pratos)
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
+
+
+
 
 
 #-------------------------------Area Promoção--------------------------------------
@@ -160,6 +166,15 @@ def delete_promotion(id):
         return jsonify({'message': 'Promoção excluída com sucesso!'}), 200
     except Exception as e:
         return jsonify({'message': str(e)}), 500
+    
+@api_routes.route('/get_promotions', methods=['GET'])
+def get_promocao():
+    try:
+        promocao = firebase_service.Get_promocoes()  
+        return jsonify(promocao)
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
+
 
 
 #-------------------------------Area Unidade--------------------------------------
@@ -186,9 +201,14 @@ def delete_restaurant(nome):
         return jsonify({'message': str(e)}), 500
 
 
-#retonar unidades
-
-
+@api_routes.route('/unidades', methods=['GET'])
+def listar_unidades():
+    try:
+        unidades = firebase_service.Get_unidades()
+        return jsonify({"unidades": unidades}), 200
+    except Exception as e:
+        logger.error(f"An Error Occurred: {e}")
+        return f"An Error Occurred: {e}", 500
 
 
 

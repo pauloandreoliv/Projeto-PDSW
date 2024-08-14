@@ -6,10 +6,6 @@ html_routes = Blueprint('html_routes', __name__)
 def inicio():
     return render_template("index.html")
 
-@html_routes.route("/index")
-def index():
-    return render_template("index.html")
-
 @html_routes.route("/admin")
 def admin():
     return render_template("admin.html")
@@ -61,7 +57,7 @@ def cardapio():
 
 @html_routes.route("/comprar")
 def comprar():
-    return render_template("comprar")
+    return render_template("comprar.html")
 
 @html_routes.route("/configuracoes")
 def configuracoes():

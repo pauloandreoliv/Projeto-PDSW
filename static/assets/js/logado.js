@@ -5,24 +5,24 @@ function alterarMenu() {
     if (!(linkMenu === null)) {
         if (logado === 'true') {
             linkMenu.innerHTML = '<i class="fa-solid fa-user"></i> Sua conta';
-            linkMenu.href = 'pedidos.html';
+            linkMenu.href = "/pedidos";
         } else {
             linkMenu.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar';
-            linkMenu.href = 'entrar.html';
+            linkMenu.href = "/entrar";
         }
     }
 }
-function sair(){
+function sair() {
     localStorage.clear();
-    window.location.href = "index.html";
+    window.location.href = "/";
 }
 
-function redirecionar(){
+function redirecionar() {
     if (logado == null) {
         var caminho = window.location.href;
-  
-        if (caminho.includes('/configuracoes.html') || caminho.includes('/pedidos.html') || caminho.includes('/comprar.html')){
-            window.location.href = "entrar.html";
+
+        if (caminho.includes("/configuracoes") || caminho.includes("/pedidos") || caminho.includes("/comprar")) {
+            window.location.href = "/entrar";
         }
     }
 }
