@@ -77,7 +77,7 @@ window.addEventListener('load', function() {
             if (data.logged_in) {
                 let comprar = `
                 <form action="/comprar" method="get">
-                    <button type="submit">Comprar</button>
+                    <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;
                 mostrarPromocoes(comprar);
@@ -86,7 +86,7 @@ window.addEventListener('load', function() {
             } else {
                 let comprar = `
                 <form action="/cadastrar" method="get">
-                    <button type="submit">Comprar</button>
+                    <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;
                 mostrarPromocoes(comprar);
@@ -100,7 +100,7 @@ window.addEventListener('load', function() {
             if (data.logged_in) {
                 let comprar = `
                 <form action="/comprar" method="get">
-                    <button type="submit">Comprar</button>
+                    <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;
                 mostrarPromocoes(comprar);
@@ -109,7 +109,7 @@ window.addEventListener('load', function() {
             } else {
                 let comprar = `
                 <form action="/cadastrar" method="get">
-                    <button type="submit">Comprar</button>
+                    <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;
                 mostrarPromocoes(comprar);
@@ -122,7 +122,7 @@ window.addEventListener('load', function() {
             if (data.logged_in) {
                 let comprar = `
                 <form action="/comprar" method="get">
-                    <button type="submit">Comprar</button>
+                    <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;
                 mostrarPromocoes(comprar);
@@ -131,7 +131,7 @@ window.addEventListener('load', function() {
             } else {
                 let comprar = `
                 <form action="/cadastrar" method="get">
-                    <button type="submit">Comprar</button>
+                    <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;
                 mostrarPromocoes(comprar);
