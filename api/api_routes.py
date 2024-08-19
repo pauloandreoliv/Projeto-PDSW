@@ -1,30 +1,53 @@
 from datetime import datetime, timedelta, timezone
 from venv import logger
-from flask import jsonify, Blueprint, request
+from flask import jsonify, Blueprint, request, make_response
 from . import firebase_service
 from .token import authentication
 
 api_routes = Blueprint('api_routes', __name__)
 
-#-------------------------------Area Cliente--------------------------------------
+#-------------------------------Login--------------------------------------
 
 @api_routes.route('/loginUser', methods=['POST'])
 def login():
     try:
-        id = request.json['cpf']
+        cpf = request.json['cpf']
         senha = request.json['senha']
         type = "usuario"
-        dados = firebase_service.FindByid(id, type)
+        dados = firebase_service.FindByCpf(cpf, type)
         
-        if firebase_service.returnPassword(dados, senha):
-            logger.info('Logado com sucesso')
+        if not dados:
+            return jsonify({"error": "Usuário não encontrado"}), 404
+        
+        if dados['senha'] == senha:
             token = authentication.gerar_token(dados['id'])
-            return jsonify({"id": dados['id'], "token": token}), 200
+            
+            response = make_response(jsonify({
+                'success': True,
+                'nome': dados['nome'],
+                'endereco': dados['endereco'],
+                'cpf': dados['cpf'],
+                'telefone': dados['telefone'],
+            }), 200)
+            
+            response.set_cookie('auth_token', token, httponly=True, secure=True, samesite='Lax')
+            return response
         else:
             return jsonify({"error": "Acesso negado. Dados inválidos."}), 401
     except Exception as e:
-        logger.error(f"An Error Occurred: {e}")
-        return f"An Error Occurred: {e}", 500
+        return jsonify({"error": f"An error occurred: {e}"}), 500
+
+ 
+@api_routes.route('/logout', methods=['POST'])
+def logout():
+    response = jsonify({'message': 'Logout realizado com sucesso'})
+
+    response.delete_cookie('auth_token')
+    
+    return response
+   
+#-----------------------------------------Usuer-----------------------------------------------------------------------------
+
 
 @api_routes.route("/add_User", methods=['POST'])
 def create_client():
@@ -40,15 +63,40 @@ def create_client():
 
     return jsonify({'message': 'Cadastro realizado com sucesso!'}), 200
 
-@api_routes.route('/user/<cpf>', methods=['PATCH'])
+
+@api_routes.route('/user/<cpf>', methods=['PUT'])
 def update_user(cpf):
-    update_data = request.json
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401
+    
     try:
+        update_data = request.json
         firebase_service.update_user(cpf, update_data)
         return jsonify({'message': 'Usuario Atualizado com sucesso!'}), 200
     except Exception as e:
         return f"An Error Occurred: {e}", 500
 
+
+@api_routes.route('/getUser', methods=['GET'])
+def get_usuario():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401   
+    try:
+        token_decodificado = authentication.validar_token(token)
+        user_id = token_decodificado['id']
+        
+        dados_usuario = firebase_service.FindUserById(user_id)  
+        
+        if dados_usuario:
+            return jsonify(dados_usuario), 200
+        else:
+            return jsonify({"error": "Usuário não encontrado"}), 404
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 401
+
+#----------------------------------------------Pedidos----------------------------------------------------------------
 
 @api_routes.route("/add_pedido", methods=['POST'])
 def create__pedido():
@@ -70,6 +118,8 @@ def create__pedido():
     except Exception as e:
         return jsonify({'message': str(e)}), 500
     
+
+
 @api_routes.route('/historico', methods=['GET'])
 def visualizar_historico_produtos():
     try:
@@ -79,6 +129,7 @@ def visualizar_historico_produtos():
     except Exception as e:
         logger.error(f"An Error Occurred: {e}")
         return f"An Error Occurred: {e}", 500
+    
 
 #-------------------------------Area ADMIN--------------------------------------
 
@@ -98,7 +149,7 @@ def loginAdmin():
         cpf = request.json['cpf']
         senha = request.json['senha']
         type = "admin"
-        dados = firebase_service.FindByid(cpf,type)
+        dados = firebase_service.FindByCpf(cpf,type)
     
 
         if firebase_service.returnPassword(dados, senha ):

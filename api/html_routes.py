@@ -20,11 +20,11 @@ def localizacao():
 
 @html_routes.route("/pedidos")
 def pedidos():
-    return render_template("pedidos")
+    return render_template("pedidos.html")
 
 @html_routes.route("/admin_adicionar")
 def admin_adicionar():
-    return render_template("admin_adicionar")
+    return render_template("admin_adicionar.html")
 
 @html_routes.route("/admin_cardapio")
 def admin_cardapio():
@@ -32,15 +32,15 @@ def admin_cardapio():
 
 @html_routes.route("/admin_index")
 def admin_index():
-    return render_template("admin_index")
+    return render_template("admin_index.html")
 
 @html_routes.route("/admin_pedidos")
 def admin_pedidos():
-    return render_template("admin_pedidos")
+    return render_template("admin_pedidos.html")
 
 @html_routes.route("/admin_promocoes")
 def admin_promocoes():
-    return render_template("admin_promocoes")
+    return render_template("admin_promocoes.html")
 
 @html_routes.route("/admin_verpromocoes")
 def admin_verpromocoes():
@@ -61,8 +61,5 @@ def comprar():
 
 @html_routes.route("/configuracoes")
 def configuracoes():
-    return render_template("configuracoes")
+    return render_template("configuracoes.html")
 
-@html_routes.route("/teste")
-def teste():
-    return "Rota de teste funcionando!"

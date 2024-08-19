@@ -1,26 +1,11 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 import { mostrarPopup } from "./popup.js";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyAwhBCw983no7qVBlsO7_Dr6YwVDj-wROg",
-    authDomain: "desenvolvimentoweb1-7361f.firebaseapp.com",
-    projectId: "desenvolvimentoweb1-7361f",
-    storageBucket: "desenvolvimentoweb1-7361f.appspot.com",
-    messagingSenderId: "346518758393",
-    appId: "1:346518758393:web:a97b06e672ddcf37881328",
-	databaseURL: "https://desenvolvimentoweb1-7361f-default-rtdb.firebaseio.com/"
-};
-
-const app = initializeApp(firebaseConfig);
-
-const database = getDatabase(app);
 
 const cadastrarButton = document.getElementById("botao_enviar");
 
 cadastrarButton.addEventListener('click', (event) => {
-	
   event.preventDefault();
+
+  console.log("Botão de cadastro clicado"); 
 
   const inputNome = document.forms["cadastro"]["inputnome"].value;
   const inputCPF = document.forms["cadastro"]["inputcpf"].value;
@@ -29,6 +14,8 @@ cadastrarButton.addEventListener('click', (event) => {
   const inputEmail = document.forms["cadastro"]["inputemail"].value;
   const inputSenha = document.forms["cadastro"]["inputsenha"].value;
   
+  console.log("Dados do formulário:", { inputNome, inputCPF, inputEndereco, inputTelefone, inputEmail, inputSenha }); // Log dos dados do formulário
+
   try {
     if (inputNome.length === 0 || inputNome == null || inputNome == undefined || !inputNome.match(/^[a-zA-Z\s]+$/)) {
       throw new Error("O nome deve conter apenas letras sem acentos.");
@@ -52,17 +39,25 @@ cadastrarButton.addEventListener('click', (event) => {
         senha: inputSenha
       };
     
-      const databaseRef = ref(database, 'usuarios');
-    
-      push(databaseRef, dados)
-      .then(() => {
-        mostrarPopup('Cadastrado com sucesso');
-      })
-      .catch((error) => {
-        mostrarPopup(error.message);
+      fetch('/add_User', {
+        method: 'POST',
+        headers: {
+              'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            })
+            .then(response => response.json())
+            .then(() => {
+              mostrarPopup('Cadastrado com sucesso');
+              setTimeout(() => {
+                window.location.href = "/entrar";  
+            }, 2000);
+            })
+            .catch((error) => {
+              mostrarPopup(error.message);
+            });
+          }
+        } catch (error) {
+          mostrarPopup(error.message);
+        }
       });
-    }
-  } catch (error) {
-    mostrarPopup(error.message);
-  }
-});

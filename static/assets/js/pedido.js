@@ -1,5 +1,6 @@
 import { comprar, mostrar, mostrarTudo } from './acoes_pedido.js';
 import { mostrarPopup } from './popup.js';
+const token = localStorage.getItem('token');
 
 var containerPedidos = document.getElementById("pedidos");
 var botao_limpar = document.getElementById("botao_limpar");
@@ -86,7 +87,7 @@ function limparInicial () {
 
 function verificacoes() {
     var url = window.location.href;
-    if (url.includes('/comprar.html')){
+    if (url.includes('/comprar')){
         limparInicial();
 
         botao_limpar.addEventListener('click', (event) => {
@@ -100,12 +101,12 @@ function verificacoes() {
         });        
     }
 
-    if (url.includes('/pedidos.html')){
+    if (url.includes('/pedidos')){
         const cpf  = localStorage.getItem("cpf");
         mostrar(cpf);
     }
 
-    if (url.includes('/admin_pedidos.html')){
+    if (url.includes('/admin_pedidos')){
         mostrarTudo();
     }
 }

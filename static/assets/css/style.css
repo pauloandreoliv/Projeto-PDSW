@@ -131,6 +131,11 @@ h1 {
   word-wrap: break-word;
 }
 
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+
 section#inicial {
   padding-top: 100px;
   padding-right: 0px;
@@ -458,7 +463,7 @@ input {
   padding: 10px;
   border: none;
   background-color: #f7f7f7;
-  color: #9b9b9b;
+  color: #0b0b0b;
   font-family: 'Poppins', sans-serif;
 }
 

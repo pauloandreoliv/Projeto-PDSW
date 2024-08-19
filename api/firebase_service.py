@@ -83,11 +83,13 @@ def update_user(cpf, update_data ):
         user_ref = doc_ref.document(user_doc.id)
         user_ref.update(update_data)
         return True, "Usuário atualizado com sucesso"
+    
+    
      
-def FindByCpf(cpf, type):
-    if type == "admin":
+def FindByCpf(cpf, tipo):
+    if tipo == "admin":
         doc_ref = db.collection('admin')
-    elif type == "usuario":
+    elif tipo == "usuario": 
         doc_ref = db.collection('usuario')
 
     query = doc_ref.where('cpf', '==', cpf).stream()
@@ -96,11 +98,20 @@ def FindByCpf(cpf, type):
         return False, "Usuário não encontrado"
     else :  
         user_doc = user_docs[0]
-        user_ref = doc_ref.document(user_doc.id)
-        return user_ref
+        user_data = user_doc.to_dict() 
+        user_data['id'] = user_doc.id
+        return user_data
 
-def returnPassword(dados, senha):
-    return dados and dados.get('senha') == senha
+def FindUserById(user_id):
+    try:
+        usuarios_ref = db.collection('usuario')
+        usuario_doc = usuarios_ref.document(user_id).get()
+        if usuario_doc.exists:
+            return usuario_doc.to_dict() 
+        else:
+            return None  
+    except Exception as e:
+        raise RuntimeError(f"Erro ao buscar usuário: {e}")
 
 
 def Get_unidades():

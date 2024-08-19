@@ -13,8 +13,23 @@ function alterarMenu() {
     }
 }
 function sair() {
-    localStorage.clear();
-    window.location.href = "/";
+    fetch('/logout', {
+        method: 'POST',
+        credentials: 'include'  
+    })
+    .then(response => {
+        if (response.ok) {
+
+            localStorage.clear();
+
+            window.location.href = "/";
+        } else {
+            console.error('Erro ao fazer logout');
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao fazer logout:', error);
+    });
 }
 
 function redirecionar() {
