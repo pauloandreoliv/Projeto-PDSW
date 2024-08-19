@@ -1,6 +1,5 @@
 import { comprar, mostrar, mostrarTudo } from './acoes_pedido.js';
 import { mostrarPopup } from './popup.js';
-const token = localStorage.getItem('token');
 
 var containerPedidos = document.getElementById("pedidos");
 var botao_limpar = document.getElementById("botao_limpar");

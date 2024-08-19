@@ -5,7 +5,7 @@ function fetchData(endpoint) {
         .catch(error => console.error('Error fetching data:', error));
 }
 
-function mostrarPromocoes() {
+function mostrarPromocoes(comprar) {
     console.log('mostrarPromocoes function called');
     fetchData('/get_promotions')
         .then(promocoes => {
@@ -24,7 +24,8 @@ function mostrarPromocoes() {
                     '<div class="info">' +
                         '<p>' + nome + '</p>' +
                         '<h5> R$' + valor + '</h5>' +
-                    '</div>';
+                    '</div>'+
+                    comprar;
                 promocaoDiv.id = promocao.id;
                 promocaoDiv.classList.add("box_produto");
 
@@ -34,7 +35,7 @@ function mostrarPromocoes() {
         .catch(error => console.error('Erro ao buscar pratos:', error));
 }
 
-function mostrarPratos() {
+function mostrarPratos(comprar) {
     console.log('mostrarPratos function called');  
     fetchData('/get_pratos')
         .then(pratos => {
@@ -53,7 +54,10 @@ function mostrarPratos() {
                     '<div class="info">' +
                         '<p>' + nome + '</p>' +
                         '<h5> R$' + valor + '</h5>' +
-                    '</div>';
+                    '</div>'+
+                    comprar
+                   ;
+                    
                 pratoDiv.id = prato.id;
                 pratoDiv.classList.add("box_produto");
 
@@ -63,19 +67,76 @@ function mostrarPratos() {
         .catch(error => console.error('Erro ao buscar pratos:', error));
 }
 
-function mostrarCardapio() {
-    mostrarPratos();
-    mostrarPromocoes();
-}
 
 window.addEventListener('load', function() {
     const caminho = window.location.pathname;
-
     if (caminho === '/cardapio') {
-        mostrarCardapio();
+        fetch('/check_login')
+        .then(response => response.json())
+        .then(data => {
+            if (data.logged_in) {
+                let comprar = `
+                <form action="/comprar" method="get">
+                    <button type="submit">Comprar</button>
+                </form>
+                `;
+                mostrarPromocoes(comprar);
+                mostrarPratos(comprar);
+                
+            } else {
+                let comprar = `
+                <form action="/cadastrar" method="get">
+                    <button type="submit">Comprar</button>
+                </form>
+                `;
+                mostrarPromocoes(comprar);
+                mostrarPratos(comprar);} 
+            })
     } else if (caminho === '/' || caminho === '/index') {
-        mostrarPromocoes();
-        mostrarPratos();
+
+        fetch('/check_login')
+        .then(response => response.json())
+        .then(data => {
+            if (data.logged_in) {
+                let comprar = `
+                <form action="/comprar" method="get">
+                    <button type="submit">Comprar</button>
+                </form>
+                `;
+                mostrarPromocoes(comprar);
+                mostrarPratos(comprar);
+                
+            } else {
+                let comprar = `
+                <form action="/cadastrar" method="get">
+                    <button type="submit">Comprar</button>
+                </form>
+                `;
+                mostrarPromocoes(comprar);
+                mostrarPratos(comprar);} 
+            })
+    } else if (caminho === '/comprar') {
+        fetch('/check_login')
+        .then(response => response.json())
+        .then(data => {
+            if (data.logged_in) {
+                let comprar = `
+                <form action="/comprar" method="get">
+                    <button type="submit">Comprar</button>
+                </form>
+                `;
+                mostrarPromocoes(comprar);
+                mostrarPratos(comprar);
+                
+            } else {
+                let comprar = `
+                <form action="/cadastrar" method="get">
+                    <button type="submit">Comprar</button>
+                </form>
+                `;
+                mostrarPromocoes(comprar);
+                mostrarPratos(comprar);} 
+            })
     } else if (caminho === '/admin_verpromocoes') {
         // Função que carrega promoções para a área administrativa
         mostrarPromocoesAdmin();

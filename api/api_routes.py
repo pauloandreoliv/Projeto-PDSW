@@ -45,7 +45,17 @@ def logout():
     response.delete_cookie('auth_token')
     
     return response
-   
+
+
+@api_routes.route('/check_login', methods=['GET'])
+def check_login():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"logged_in": False}), 401
+
+    else:
+        return jsonify({"logged_in": True})
+  
 #-----------------------------------------Usuer-----------------------------------------------------------------------------
 
 
