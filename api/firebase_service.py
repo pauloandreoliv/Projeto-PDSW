@@ -50,11 +50,12 @@ def delete_promotion(id):
     doc_ref.delete()
 
 
-def add_unidade(nome, url_img, endereco):
+def add_unidade(nome, url_img, endereco, mapa):
     doc_ref = db.collection('unidade').add({
         'nome': nome,
         'url_img': url_img,
-        'endereco': endereco
+        'endereco': endereco,
+        'mapa': mapa
     })
 
 def delete_restaurant(id):
@@ -119,6 +120,7 @@ def Get_unidades():
     unidades = []
     for unidade in unidades_ref:
         unidade_data = unidade.to_dict()
+        unidade_data['id'] = unidade.id
         unidades.append(unidade_data)
     return unidades
     

@@ -244,9 +244,10 @@ def add_restaurant():
     nome = data.get('nome')
     endereco = data.get('endereco')
     url_img = data.get('url_img')
+    mapa = data.get('mapa')
 
     try:
-        firebase_service.add_unidade(nome, endereco, url_img)
+        firebase_service.add_unidade(nome, endereco, url_img, mapa)
         return jsonify({'message': 'Unidade de restaurante cadastrada com sucesso!'}), 201
     except Exception as e:
         return jsonify({'message': str(e)}), 500
