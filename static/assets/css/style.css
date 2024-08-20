@@ -26,6 +26,30 @@ html {
   scroll-behavior: smooth;
 }
 
+#total {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#total:hover {
+  background-color: #e6e6e6;
+  color: #111;
+}
+
+#total span {
+  color: #007bff; /* Destaque para o valor */
+}
+
+
+
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -476,20 +500,45 @@ section#pedidos .container {
   flex-wrap: wrap;
 }
 
+
 section#pedidos .box_pedido {
   width: 250px;
-  height: 200px;
-  padding: 15px;
-  margin-top: 15px;
-  margin-right: 15px;
-  box-shadow: 0px 0px 14px #0000000f;
+  min-height: 150px; /* Ajusta a altura mínima para melhor layout */
+  padding: 20px;
+  margin: 0;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
+  box-sizing: border-box; /* Inclui padding e border na largura e altura total */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+section#pedidos .box_pedido h5 {
+  font-size: 1.0rem;
+  color: #333;
+  margin: 0 0 10px;
 }
 
 section#pedidos .box_pedido p {
-  word-wrap: break-word;
-  height: 100px;
-  overflow-y: scroll;
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
 }
+
+#Sem_Historico {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  color: #666;
+}
+
+
 
 section#configuracoes ul {
   list-style: none;

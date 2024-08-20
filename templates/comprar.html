@@ -22,7 +22,8 @@
         <div class="logo"></div>
         <a href="{{ url_for('html_routes.pedidos') }}">Pedidos</a>   
         <a href="{{ url_for('html_routes.comprar') }}">Comprar</a>
-        <a href="{{ url_for('html_routes.configuracoes') }}">Configurações</a>     
+        <a href="{{ url_for('html_routes.localizacao_user') }}">Localização</a>
+        <a href="{{ url_for('html_routes.configuracoes') }}">Configurações</a>    
         <a id="sair_usuario"><i class="fa-solid fa-right-to-bracket"></i> Sair</a>
       </div>
     </nav>
@@ -62,9 +63,12 @@
                 <h4>Nome do produto</h4>
                 <h5>R$00,00</h5>
             </article>
+            
         </div>
+        <div id="total">Total: R$ 0,00</div>
+
     </section>
-    <section id="cardapio">
+    <section id="promocao">
       <h1>Promoções</h1>
       <div class="container" id="mostrarPromocoes">
         <article class="box_produto">
@@ -90,7 +94,7 @@
             <p>Produto de exemplo</p>
             <h5>R$49,90</h5>
           </div>
-          <button id="botao_comprar">Comprar</button>
+          <button id="comprar">Comprar</button>
         </article>
       </div>
     </section>

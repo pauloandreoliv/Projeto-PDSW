@@ -18,6 +18,11 @@ def entrar():
 def localizacao():
     return render_template("localizacao.html")
 
+@html_routes.route("/localizacao_user")
+def localizacao_user():
+    return render_template("localizacao_user.html")
+
+
 @html_routes.route("/pedidos")
 def pedidos():
     return render_template("pedidos.html")

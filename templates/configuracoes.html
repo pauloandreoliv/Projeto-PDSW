@@ -20,9 +20,10 @@
       </div>
       <div class="container" id="normal">
         <div class="logo"></div>
-        <a href="pedidos">Pedidos</a>   
-        <a href="comprar">Comprar</a>
-        <a href="configuracoes">Configurações</a>     
+        <a href="{{ url_for('html_routes.pedidos') }}">Pedidos</a>   
+        <a href="{{ url_for('html_routes.comprar') }}">Comprar</a>
+        <a href="{{ url_for('html_routes.localizacao_user') }}">Localização</a>
+        <a href="{{ url_for('html_routes.configuracoes') }}">Configurações</a>    
         <a id="sair_usuario"><i class="fa-solid fa-right-to-bracket"></i> Sair</a>
       </div>
     </nav>

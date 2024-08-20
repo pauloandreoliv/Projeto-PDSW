@@ -113,14 +113,14 @@ def create__pedido():
     now = datetime.now(timezone.utc)
     offset = timedelta(hours=-3)
     now_local = now + offset
-    formatted_date = now_local.strftime("%d de %B de %Y às %H:%M:%S") + " UTC-3"
+    formatted_date = now_local.strftime("%d de %B de %Y às %H:%M:%S") 
 
     data = request.json
     cpf = data.get('cpf')
     endereco = data.get('endereco')
+    telefone_cliente = data.get('telefone_cliente')
     formadepgmto = data.get('formadepgmto')
     pratos = data.get('pratos')
-    telefone_cliente = data.get('telefone_cliente')
     total = data.get('total')
     try :
         firebase_service.create_pedido(cpf, formatted_date, endereco, formadepgmto, pratos, telefone_cliente, total)
@@ -130,10 +130,9 @@ def create__pedido():
     
 
 
-@api_routes.route('/historico', methods=['GET'])
-def visualizar_historico_produtos():
+@api_routes.route('/historico/<cpf>', methods=['GET'])
+def visualizar_historico_produtos(cpf):
     try:
-        cpf = request.args.get('cpf')
         historico = firebase_service.Get_pedidos(cpf)
         return jsonify({"historico": historico}), 200
     except Exception as e:

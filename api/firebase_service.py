@@ -142,7 +142,7 @@ def Get_promocoes():
     return promocoes
 
 def Get_pedidos(cpf):
-    pedidos_ref = db.collection('pedidos').where('cpf', '==', cpf).stream()
+    pedidos_ref = db.collection('pedido').where('cpf', '==', cpf).stream()
     historico = []
     for pedido in pedidos_ref:
         pedido_data = pedido.to_dict()

@@ -1,11 +1,14 @@
+
 import { mostrarPopup } from './popup.js';
 
 const containerPedidos = document.getElementById("pedidos");
 const botao_limpar = document.getElementById("botao_limpar");
-const botoes_comprar = document.querySelectorAll("botao_comprar");
+const botao_comprar = document.getElementById("botao_comprar");
+const totalElement = document.getElementById("total"); // Elemento onde o total será exibido
 let listaDeItens = [];
+let total = 0;
 
-// Função para adicionar itens ao carrinho
+
 function adicionarItem(nome, preco) {
     const primeiro_item = document.getElementById("primeiro_item");
     if (primeiro_item) {
@@ -17,19 +20,29 @@ function adicionarItem(nome, preco) {
     containerPedidos.appendChild(elemento);
 
     listaDeItens.push({ nome, preco });
-
+    atualizarTotal(preco);
 }
 
 
 
-// Função para limpar o carrinho
+
 function limparItens() {
     containerPedidos.innerHTML = "";
     listaDeItens = [];
+    total = 0;
+    atualizarTotal(0, true);
     limparInicial();
 }
 
-// Função para finalizar o pedido
+function atualizarTotal(preco, reset = false) {
+    if (reset) {
+        total = 0;
+    } else {
+        total += parseFloat(preco.replace('R$', '').replace(',', '.'));
+    }
+    totalElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+}
+
 async function finalizarPedido() {
     if (listaDeItens.length === 0) {
         mostrarPopup("Seu carrinho está vazio");
@@ -47,11 +60,12 @@ async function finalizarPedido() {
         const cpf = localStorage.getItem("cpf");
 
         const pedido = {
-            itens: listaDeItens,
-            forma_pagamento: formadepgmto,
+            pratos: listaDeItens,
+            formadepgmto: formadepgmto,
             endereco: endereco,
-            telefone: telefone,
+            telefone_cliente: telefone,
             cpf: cpf,
+            total: total, 
         };
 
         const response = await fetch('/add_pedido', {
@@ -75,47 +89,38 @@ async function finalizarPedido() {
     }
 }
 
-// Função para inicializar o carrinho vazio
+
 function limparInicial() {
     containerPedidos.innerHTML = `
         <article id="primeiro_item">
             <h4>Você ainda não escolheu um item :(</h4>
             <h5>Que tal provar algo novo?</h5>
         </article>`;
+    atualizarTotal(0, true); 
 }
 
-// Adicionar evento aos botões de compra
-botoes_comprar.forEach((botao, index) => {
-    var botoesComprar = document.querySelectorAll("button[id^='comprar']");
 
-    botoesComprar.forEach(function(botao) {
-        botao.addEventListener('click', function(event) {
-            // Evitar o comportamento padrão do botão (recarregar a página)
-            event.preventDefault();
+document.body.addEventListener('click', function(event) {
 
-            // Encontrar o artigo pai do botão
-            var artigo = botao.closest(".box_produto");
-
-            // Capturar o nome e preço do produto
-            var nome = artigo.querySelector(".info p").textContent;
-            var preco = artigo.querySelector(".info h5").textContent;
-
-            // Adicionar o item ao pedido
-            adicionarItem(nome, preco);
-        });
-    });
+    if (event.target && event.target.id === 'comprar') {
+        event.preventDefault();
+        var artigo = event.target.closest(".box_produto");
+        var nome = artigo.querySelector(".info p").textContent;
+        var preco = artigo.querySelector(".info h5").textContent;
+        adicionarItem(nome, preco);
+    }
 });
 
-// Eventos dos botões limpar e finalizar
+
 botao_limpar.addEventListener('click', (event) => {
     event.preventDefault();
     limparItens();
 });
 
-document.getElementById("botao_comprar").addEventListener('click', (event) => {
+botao_comprar.addEventListener('click', (event) => {
     event.preventDefault();
     finalizarPedido();
 });
 
-// Inicializa o carrinho vazio ao carregar a página
+
 window.addEventListener('load', limparInicial);
