@@ -58,7 +58,6 @@ def check_login():
   
 #-----------------------------------------Usuer-----------------------------------------------------------------------------
 
-
 @api_routes.route("/add_User", methods=['POST'])
 def create_client():
     data = request.get_json()
@@ -140,59 +139,88 @@ def visualizar_historico_produtos(cpf):
         return f"An Error Occurred: {e}", 500
     
 
+@api_routes.route('/historicoAdmin', methods=['GET'])
+def historico_admin():
+    try:
+        pedidos = firebase_service.getAll_pedidos()
+        if pedidos is None:
+            pedidos = [] 
+        return jsonify(pedidos)
+    except Exception as e:
+        print(f"Erro ao buscar pedidos: {e}")
+        return jsonify({"error": "Erro ao buscar pedidos"}), 500
+
 #-------------------------------Area ADMIN--------------------------------------
 
 @api_routes.route("/add_Admin", methods=['POST'])
 def cadastar_admin():
     data = request.get_json()
+    nome = data.get('nome')
     cpf = data.get('cpf')
     senha = data.get('senha')
 
-    firebase_service.create_admin(cpf,senha)
+    firebase_service.create_admin(nome,cpf,senha)
 
     return jsonify({'message': 'Cadastro realizado com sucesso!'}), 200
 
 @api_routes.route('/loginAdm', methods=['POST'])
-def loginAdmin():
+def loginAdim():
     try:
         cpf = request.json['cpf']
         senha = request.json['senha']
         type = "admin"
-        dados = firebase_service.FindByCpf(cpf,type)
-    
-
-        if firebase_service.returnPassword(dados, senha ):
-            logger.info('Logado com sucesso')
+        dados = firebase_service.FindByCpf(cpf, type)
+        
+        if not dados:
+            return jsonify({"error": "Usuário não encontrado"}), 404
+        
+        if dados['senha'] == senha:
             token = authentication.gerar_token(dados['id'])
-            return jsonify({"id": dados['id'], "token": token}), 200
+            
+            response = make_response(jsonify({
+                'success': True,
+                'nome': dados['nome'],
+                'cpf': dados['cpf'],
+            }), 200)
+            
+            response.set_cookie('auth_token', token, httponly=True, secure=True, samesite='Lax')
+            return response
         else:
             return jsonify({"error": "Acesso negado. Dados inválidos."}), 401
     except Exception as e:
-        logger.error(f"An Error Occurred: {e}")
-        return f"An Error Occurred: {e}", 500
+        return jsonify({"error": f"An error occurred: {e}"}), 500
 
 
 #-------------------------------Area Produdo--------------------------------------
 @api_routes.route('/add_prato', methods=['POST'])
 def add_prato():
-    data = request.get_json()
-    valor = data.get('valor')
-    nome = data.get('nome')
-    url_img= data.get('url_img')
-
-    firebase_service.add_prato(valor, nome, url_img)
-
-    return jsonify({'message': 'Cadastro realizado com sucesso!'}), 200
-
-
-@api_routes.route('/delete_prato/', methods=['DELETE'])
-def remove_prato(prato_id):
     try:
-        firebase_service.delete_prato(prato_id)
-        return jsonify({'message': 'prato excluído com sucesso!'}), 200
-    except Exception as e:
-        return jsonify({'message': str(e)}), 500
+        dados = request.json
+        nome = dados.get('nome')
+        valor = dados.get('valor')
+        url = dados.get('url_img')
 
+        if not nome or not valor or not url:
+            return jsonify({"success": False, "message": "Todos os campos são obrigatórios."}), 400
+
+        novo_prato_ref = firebase_service.add_prato(nome, valor, url)
+
+        return jsonify({"success": True, "id": novo_prato_ref}), 201
+
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
+    
+
+
+@api_routes.route('/delete_prato/<id>', methods=['DELETE'])
+def remove_prato(id):
+    try:
+        firebase_service.delete_prato(id)
+        return jsonify({'message': 'Prato excluído com sucesso!'}), 200
+    except Exception as e:
+        # Log the error for debugging
+        print(f"Erro ao excluir prato: {e}")
+        return jsonify({'message': 'Erro ao excluir prato. Detalhes: ' + str(e)}), 500
 
 @api_routes.route('/get_pratos', methods=['GET'])
 def get_pratos():
@@ -230,7 +258,7 @@ def delete_promotion(id):
 @api_routes.route('/get_promotions', methods=['GET'])
 def get_promocao():
     try:
-        promocao = firebase_service.Get_promocoes()  
+        promocao = firebase_service.Get_promotion()  
         return jsonify(promocao)
     except Exception as e:
         return jsonify({'message': str(e)}), 500

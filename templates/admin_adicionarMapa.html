@@ -20,15 +20,16 @@
         <div id="invisivel">
           <a href="{{ url_for('html_routes.admin_index') }}">Início</a>
           <a href="{{ url_for('html_routes.admin_pedidos') }}">Pedidos</a>
-          <a href="{{ url_for('html_routes.admin_adicionar') }}">Adicionar</a>
+          <a href="{{ url_for('html_routes.admin_adicionar') }}">Adicionar Pratos</a>
           <a href="{{ url_for('html_routes.admin_cardapio') }}">Cardápio</a>
           <a href="{{ url_for('html_routes.admin_promocoes') }}">Promoções</a>
+          <a href="{{ url_for('html_routes.admin_adicionarMapa) }}">Localizaçáo</a>
           <a id="sair_admin"> Sair</a>
         </div>
       </nav>
   </header>
   <main>
-  	<section id="popup">
+	<section id="popup">
         <div class="container">
           <span id="botao_close"><i class="fa-solid fa-close"></i></span>
           <article>
@@ -51,11 +52,10 @@
          </ul>
         </nav>
     </section>
-    <section class="direita" id="promocoes">
-      <h1>Promoções</h1>
-      <a href="{{ url_for('html_routes.admin_verpromocoes') }}"><button><i class="fa-solid fa-eye"></i> Ver promoções</button></a>
+    <section class="direita" id="adicionar">
+      <h1>Adicionar Pratos</h1>
       <div class="container">
-         <form id="inserir" name="inserir">
+        <form method="POST" id="inserir" name="inserir">
           <ul>
             <li>
               <label for="inputnome">Nome:</label>
@@ -83,7 +83,7 @@
     </center>
   </footer>
   <script src="{{ url_for('static', filename='assets/js/menuAdmin.js') }}"></script>
-  <script src="{{ url_for('static', filename='assets/js/inserir_promocao.js') }}" type="module"></script>
+  <script src="{{ url_for('static', filename='assets/js/inserir_prato.js') }}" type="module"></script>
   <script src="{{ url_for('static', filename='assets/js/logado_admin.js') }}"></script>
 </body>
 </html>

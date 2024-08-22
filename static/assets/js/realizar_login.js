@@ -14,7 +14,7 @@ entrarButton.addEventListener('click', (event) => {
         } else if (inputSenha.length === 0 || inputSenha === null || inputSenha === undefined) {
             throw new Error("A senha não pode estar vazia");
         } else {
-            // Enviar os dados para a API de login no Flask
+
             fetch('/loginUser', {
                 method: 'POST',
                 headers: {

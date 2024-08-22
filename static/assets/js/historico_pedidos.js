@@ -1,5 +1,4 @@
 
-import { mostrarPopup } from "./popup.js";
 async function buscarHistoricoPedidos() {
     const id = localStorage.getItem("cpf");
 
@@ -9,7 +8,7 @@ async function buscarHistoricoPedidos() {
     }
 
     try {
-        // Realiza a requisição para obter o histórico de pedidos, incluindo o ID na URL
+      
         const response = await fetch(`/historico/${id}`, {
             method: 'GET',
             headers: {
@@ -24,22 +23,22 @@ async function buscarHistoricoPedidos() {
         const data = await response.json();
         const historico = data.historico;
 
-        console.log(historico); // Inspeciona o conteúdo da resposta
+        console.log(historico); 
 
         const container = document.getElementById("mostrarPedidos");
-        container.innerHTML = ""; // Limpa o conteúdo atual
+        container.innerHTML = ""; 
 
         if (!Array.isArray(historico) || historico.length === 0) {
-            // Se não houver histórico ou se a resposta não for um array, exibe a mensagem
+   
             container.innerHTML = `
                 <article id="Sem_Historico">
                     <h4>Você ainda não fez pedidos :(</h4>
                     <h5>Que tal provar algo novo?</h5>
                 </article>`;
         } else {
-            // Se houver histórico, exibe os pedidos
+        
             historico.forEach(pedido => {
-                // Verifica se `valorTotal` e `itens` estão definidos e se `itens` é um array
+           
                 const valorTotal = pedido.total || 0;
                 const data = pedido.data
                 const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
@@ -62,59 +61,66 @@ async function buscarHistoricoPedidos() {
     }
 }
 
-// Chama a função ao carregar a página
-window.addEventListener('load', buscarHistoricoPedidos);
+async function mostrarTudo() {
+    try {
+        const response = await fetch('/historicoAdmin', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-// Chama a função ao carregar a página
-window.addEventListener('load', buscarHistoricoPedidos);
-
-function mostrarTudo () {
-    const databaseRef = ref(database, 'pedidos');
-
-    const mostrarPedidos = document.getElementById('mostrarPedidosAdmin');
-
-    mostrarPedidos.innerHTML = "";
-
-    onValue(databaseRef, (snapshot) => {
-    
-        const pedidos = snapshot.val();
-
-        for (const pedido in pedidos) {
-
-            const dadosPedido = pedidos[pedido];
-            const data = dadosPedido.data;
-            const itens = dadosPedido.pratos;
-            const endereco = dadosPedido.endereco;
-            const telefone = dadosPedido.telefone;
-            const forma = dadosPedido.formadepgmto;
-            const total = dadosPedido.total;
-
-            var pedidoDiv = document.createElement('article')
-            pedidoDiv.innerHTML = 
-            '<h4>' + endereco +'</h4>'+
-            '<ul>'+
-            '<li>' + data + '</li>'+
-            '<li>'+ telefone + '</li>'+
-            '<li>'+ forma + '</li>'+
-            '<li>R$'+ total + '</li>'+
-            '</ul>'+
-            '<h5>Itens:</h5>'+
-            '<p>'+ itens + '</p>';
-            pedidoDiv.id = pedido;
-            pedidoDiv.classList.add("box_pedido");
-
-            mostrarPedidos.appendChild(pedidoDiv);
+        if (!response.ok) {
+            throw new Error('Erro ao buscar pedidos');
         }
-    });
-}
 
+        const pedidos = await response.json();
+        const container = document.getElementById('mostrarPedidosAdmin');
+        container.innerHTML = ""; // Limpa o conteúdo atual
+
+        if (!Array.isArray(pedidos) || pedidos.length === 0) {
+            container.innerHTML = `
+                <article id="Sem_Historico">
+                    <h4>Nenhum pedido encontrado</h4>
+                </article>`;
+        } else {
+            pedidos.forEach(pedido => {
+                const valorTotal = pedido.total || 0;
+                const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
+                const dataPedido = pedido.data;
+                const endereco = pedido.endereco;
+                const telefone = pedido.telefone_cliente;  // Atualizado
+                const formaDePagamento = pedido.formadepgmto;
+
+                const pedidoDiv = document.createElement('article');
+                pedidoDiv.classList.add("box_pedido");
+
+                pedidoDiv.innerHTML = `
+                    <h4>${endereco}</h4>
+                    <ul>
+                        <li>Data: ${dataPedido}</li>
+                        <li>Telefone: ${telefone}</li>
+                        <li>Forma de Pagamento: ${formaDePagamento}</li>
+                        <li>Valor Total: R$ ${valorTotal.toFixed(2)}</li>
+                    </ul>
+                    <h5>Itens:</h5>
+                    <p>${itens.map(item => item.nome).join(", ")}</p>
+                `;
+                container.appendChild(pedidoDiv);
+            });
+        }
+    } catch (error) {
+        console.error('Erro ao buscar pedidos:', error);
+    }
+}
 window.addEventListener('load', function() {
     const caminho = window.location.pathname;
     if (caminho === '/pedidos') {
      buscarHistoricoPedidos()
             }
-    else if (caminho === '/admin_pedidos') {
+    if (caminho === '/admin_pedidos') {
         mostrarTudo ();
     }
 });
+
 

@@ -6,15 +6,15 @@ function redirecionar(){
     if (logadoAdmin == null) {
         var caminho = window.location.href;
   
-        if (caminho.includes('/admin_index.html') || caminho.includes('/admin_adicionar.html') || caminho.includes('/admin_cardapio.html') || caminho.includes('/admin_pedidos.html') || caminho.includes('/admin_promocoes.html') || caminho.includes('/admin_verpromocoes.html')){
-            window.location.href = "admin.html";
+        if (caminho.includes('/admin_index') || caminho.includes('/admin_adicionar') || caminho.includes('/admin_cardapio') || caminho.includes('/admin_pedidos') || caminho.includes('/admin_promocoes') || caminho.includes('/admin_verpromocoes')){
+            window.location.href = "/admin";
         }
     }
 }
 
 function alterarTitulo(){
     if (logadoAdmin == 'true') {
-        var nome = localStorage.getItem('nomeAdmin');
+        var nome = localStorage.getItem('nome');
         titulo.textContent = "Olá, " + nome;
     }
 }
@@ -29,7 +29,7 @@ function inserirData() {
 window.addEventListener('load', function() {
     redirecionar();
     var caminho = window.location.href;
-    if (caminho.includes('/admin_index.html')){
+    if (caminho.includes('/admin_index')){
         alterarTitulo();
         inserirData();
     }
@@ -42,7 +42,7 @@ sair.addEventListener('click', (event) => {
 
   localStorage.clear();
 
-  window.location.href = "admin.html";
+  window.location.href = "/admin";
 });
 
 const sairnormal = document.getElementById("sair_admin_normal");
@@ -52,5 +52,5 @@ sairnormal.addEventListener('click', (event) => {
 
   localStorage.clear();
 
-  window.location.href = "admin.html";
+  window.location.href = "/admin";
 });

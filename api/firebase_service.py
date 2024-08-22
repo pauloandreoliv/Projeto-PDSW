@@ -8,9 +8,10 @@ def initialize_firebase():
     global db
     db = firestore.client()
 
-def create_admin(cpf, senha):
+def create_admin(nome, cpf, senha):
 
     doc_ref = db.collection('admin').add({
+        'nome': nome,
         'cpf': cpf,
         'senha': senha
     })
@@ -26,10 +27,10 @@ def create_user(cpf, nome, email, endereco, telefone, senha):
         'senha': senha
     })
 
-def add_prato (valor, nome, url_img):
+def add_prato (nome, valor, url):
     doc_ref = db.collection('prato').add({
         'nome': nome,
-        'url_img': url_img,
+        'url_img': url,
         'valor': valor
     })
     #doc_id = doc_ref[1].id 
@@ -45,10 +46,9 @@ def add_promotion(nome, url_img, valor):
         'valor': valor
     })
 
-def delete_promotion(id):
-    doc_ref = db.collection('promocao').document(id)
+def delete_promotion(promotion_id):
+    doc_ref = db.collection('promocao').document(promotion_id)
     doc_ref.delete()
-
 
 def add_unidade(nome, url_img, endereco, mapa):
     doc_ref = db.collection('unidade').add({
@@ -134,7 +134,7 @@ def Get_pratos():
         pratos.append(prato_data)
     return pratos
 
-def Get_promocoes():
+def Get_promotion():
     promocoes_ref = db.collection('promocao').stream()
     promocoes = []
     for promocao in promocoes_ref:
@@ -147,6 +147,14 @@ def Get_pedidos(cpf):
     pedidos_ref = db.collection('pedido').where('cpf', '==', cpf).stream()
     historico = []
     for pedido in pedidos_ref:
+        pedido_data = pedido.to_dict()
+        historico.append(pedido_data)
+    return historico
+
+def getAll_pedidos():
+    pedidos_ref = db.collection('pedido')
+    historico = []
+    for pedido in pedidos_ref.stream():
         pedido_data = pedido.to_dict()
         historico.append(pedido_data)
     return historico

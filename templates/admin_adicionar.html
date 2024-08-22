@@ -18,11 +18,11 @@
           <div id="botao_menu"><i class="fa-solid fa-bars"></i></div>
         </div>
         <div id="invisivel">
-          <a href="admin_index">Início</a>
-          <a href="admin_pedidos">Pedidos</a>
-          <a href="admin_adicionar">Adicionar</a>
-          <a href="admin_cardapio">Cardápio</a>
-          <a href="admin_promocoes">Promoções</a>
+          <a href="{{ url_for('html_routes.admin_index') }}">Início</a>
+          <a href="{{ url_for('html_routes.admin_pedidos') }}">Pedidos</a>
+          <a href="{{ url_for('html_routes.admin_adicionar') }}">Adicionar</a>
+          <a href="{{ url_for('html_routes.admin_cardapio') }}">Cardápio</a>
+          <a href="{{ url_for('html_routes.admin_promocoes') }}">Promoções</a>
           <a id="sair_admin"> Sair</a>
         </div>
       </nav>
@@ -42,17 +42,18 @@
       <div class="logo"></div>
       <nav>
         <ul>
-          <a href="admin_index"><li><i class="fa-solid fa-house"></i> Início</li></a>
-          <a href="admin_pedidos"><li><i class="fa-solid fa-receipt"></i> Pedidos</li></a>
-          <a href="admin_adicionar"><li><i class="fa-solid fa-plus"></i> Adicionar</li></a>
-          <a href="admin_cardapio"><li><i class="fa-solid fa-utensils"></i> Cardápio</li></a>
-          <a href="admin_promocoes"><li><i class="fa-solid fa-percent"></i> Promoções</li></a>
+          <a href="{{ url_for('html_routes.admin_index') }}"><li><i class="fa-solid fa-house"></i> Início</li></a>
+          <a href="{{ url_for('html_routes.admin_pedidos') }}"><li><i class="fa-solid fa-receipt"></i> Pedidos</li></a>
+          <a href="{{ url_for('html_routes.admin_cardapio') }}"><li><i class="fa-solid fa-utensils"></i> Cardápio</li></a>
+          <a href="{{ url_for('html_routes.admin_promocoes') }}"><li><i class="fa-solid fa-percent"></i> Promoções</li></a>
+          <a href="{{ url_for('html_routes.admin_adicionarMapa') }}"><li><i class="fa-solid fa-map"></i> Localizaçáo</li></a>
           <a id="sair_admin_normal"><li><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</li></a>
          </ul>
         </nav>
     </section>
     <section class="direita" id="adicionar">
-      <h1>Adicionar</h1>
+      <a href="{{ url_for('html_routes.admin_cardapio') }}"><button><i class="fa-solid fa-eye"></i> Ver cardapio</button></a>
+      <h1>Adicionar Pratos</h1>
       <div class="container">
         <form method="POST" id="inserir" name="inserir">
           <ul>

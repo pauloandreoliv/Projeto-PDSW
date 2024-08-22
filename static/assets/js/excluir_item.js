@@ -1,51 +1,57 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getDatabase, ref, remove } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
 import { mostrarPopup } from "./popup.js";
-import { mostrarPromocoesAdmin, mostrarPratosAdmin } from "./mostrar_pratosepromocoes.js"
+import { mostrarPratosAdmin} from "./mostrar_pratosepromocoes.js";
+import { mostrarPromoAdmin } from "./mostrar_pratosepromocoes.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAwhBCw983no7qVBlsO7_Dr6YwVDj-wROg",
-    authDomain: "desenvolvimentoweb1-7361f.firebaseapp.com",
-    projectId: "desenvolvimentoweb1-7361f",
-    storageBucket: "desenvolvimentoweb1-7361f.appspot.com",
-    messagingSenderId: "346518758393",
-    appId: "1:346518758393:web:a97b06e672ddcf37881328",
-    databaseURL: "https://desenvolvimentoweb1-7361f-default-rtdb.firebaseio.com/"
-};
-
-const app = initializeApp(firebaseConfig);
-
-const database = getDatabase(app);
-
-function removerPrato(id_parametro){
-
-    var id = id_parametro;
-    const prato = ref(database, 'pratos/' + id);
-
-    remove(prato)
-    .then(() => {
-        mostrarPopup("Excluído com sucesso.");
-        mostrarPratosAdmin();
+function removerPrato(id) {
+    fetch(`/delete_prato/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            mostrarPopup("Excluído com sucesso.");
+            mostrarPratosAdmin();
+        } else {
+            throw new Error("Erro ao excluir prato.");
+        }
     })
     .catch((error) => {
         mostrarPopup("Erro. Tente novamente.");
     });
 }
 
-function removerPromocao(id_parametro){
 
-    var id = id_parametro;
-    const promocao = ref(database, 'promocoes/' + id);
+window.removerPrato = removerPrato;
 
-    remove(promocao)
-    .then(() => {
-        mostrarPopup("Excluído com sucesso.");
-        mostrarPromocoesAdmin();
+
+window.removerPromocao = removerPromocao;
+
+function removerPromocao(id) {
+    fetch(`/delete_promotion/${id}`, { 
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            mostrarPopup("Excluído com sucesso.");
+            mostrarPromoAdmin(); // Atualiza a lista de promoções
+        } else {
+            throw new Error("Erro ao excluir promoção.");
+        }
     })
     .catch((error) => {
         mostrarPopup("Erro. Tente novamente.");
     });
 }
+
+export { removerPromocao };
+
+
 
 function remover (id){
     var url = window.location.href;
@@ -66,4 +72,4 @@ function adicionarListenerBotoes() {
     }
   }
   
-export { adicionarListenerBotoes };
+export { adicionarListenerBotoes, removerPrato };

@@ -31,9 +31,13 @@ def pedidos():
 def admin_adicionar():
     return render_template("admin_adicionar.html")
 
+@html_routes.route("/admin_adicionarMapa")
+def admin_adicionarMapa():
+    return render_template("admin_adicionarMapa.html")
+
 @html_routes.route("/admin_cardapio")
 def admin_cardapio():
-    return render_template("admin_cardapio")
+    return render_template("admin_cardapio.html")
 
 @html_routes.route("/admin_index")
 def admin_index():
@@ -42,6 +46,12 @@ def admin_index():
 @html_routes.route("/admin_pedidos")
 def admin_pedidos():
     return render_template("admin_pedidos.html")
+
+@html_routes.route("/admin_pedidosDiario")
+def admin_pedidosDiario():
+    return render_template("admin_pedidosDiario.html")
+
+
 
 @html_routes.route("/admin_promocoes")
 def admin_promocoes():

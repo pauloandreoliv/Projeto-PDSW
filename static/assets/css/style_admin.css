@@ -167,7 +167,9 @@ input {
 section.direita#cardapio .container {
   height: fit-content;
   padding: 10px;
-  flex-flow: wrap;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
 }
 
 section.direita#cardapio .container .box_item {
@@ -177,6 +179,32 @@ section.direita#cardapio .container .box_item {
   margin-right: 15px;
   margin-top: 15px;
   border: 1px solid #eae9e9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+section.direita#cardapio .container .box_item h6 {
+  margin: 5px 0;
+  text-align: center;
+}
+
+section.direita#cardapio .container .box_item button {
+  background-color: rgb(8, 181, 8);
+  border: none;
+  cursor: pointer;
+}
+
+section.direita#cardapio .container .box_item a {
+  color: #000;
+  text-decoration: none;
+}
+
+section.direita#cardapio .container .box_item p {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 5px;
 }
 
 .box_index {
@@ -269,10 +297,6 @@ section.direita#cardapio .container .box_item {
     width: 100%;
   }
 
-  section.direita#cardapio .container {
-    height: fit-content;
-    overflow-y: auto;
-  }
 
   .box_index {
     margin-right: 0px;

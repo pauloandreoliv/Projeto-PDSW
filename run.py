@@ -3,7 +3,7 @@ from api.api_routes import api_routes
 from api.html_routes import html_routes
 from api.firebase_service import initialize_firebase
 
-
+ 
 def create_app():
     app = Flask(__name__)
     
