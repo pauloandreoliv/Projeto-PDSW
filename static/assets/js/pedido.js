@@ -58,6 +58,7 @@ async function finalizarPedido() {
         const telefone = localStorage.getItem("telefone");
         const endereco = localStorage.getItem("endereco");
         const cpf = localStorage.getItem("cpf");
+        const hoje = new Date().toISOString().split('T')[0]; 
 
         const pedido = {
             pratos: listaDeItens,
@@ -65,6 +66,7 @@ async function finalizarPedido() {
             endereco: endereco,
             telefone_cliente: telefone,
             cpf: cpf,
+            data: hoje,
             total: total, 
         };
 

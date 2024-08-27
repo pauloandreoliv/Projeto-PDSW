@@ -61,6 +61,10 @@ body.body-login {
   background-color: var(--corsecundaria);
 }
 
+body.body-esqueciEmail {
+  background-color: var(--fundo);
+}
+
 body#admin {
   background-color: #c2ffe1;
 }
@@ -317,6 +321,17 @@ section#sobre .linhadotempo {
   position: relative;
   max-width: 800px;
   margin: 0 auto;
+}
+
+.custom-link {
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #0f0f10;
+}
+
+.custom-link:hover {
+  color: #299f0b;
 }
 
 section#sobre .linhadotempo::before {
@@ -712,4 +727,51 @@ section#pedido .container#botoes #botao_limpar {
   width: 55%;
   max-width: 200px;
   cursor: pointer;
+}
+
+
+form#esqueciSenha {
+  width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+
+  
+
+}
+
+form#esqueciSenha ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+form#esqueciSenha label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+form#esqueciSenha input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  
+}
+
+form#esqueciSenha button#botao_enviar {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form#esqueciSenha button#botao_enviar:hover {
+  background-color: #218838;
 }

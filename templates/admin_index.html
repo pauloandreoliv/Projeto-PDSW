@@ -23,6 +23,7 @@
           <a href="{{ url_for('html_routes.admin_adicionar') }}">Adicionar</a>
           <a href="{{ url_for('html_routes.admin_cardapio') }}">Cardápio</a>
           <a href="{{ url_for('html_routes.admin_promocoes') }}">Promoções</a>
+          <a href="{{ url_for('html_routes.admin_adicionarMapa') }}">Localização</a>
           <a id="sair_admin"> Sair</a>
         </div>
       </nav>
@@ -37,6 +38,7 @@
           <a href="{{ url_for('html_routes.admin_cardapio') }}"><li><i class="fa-solid fa-utensils"></i> Cardápio</li></a>
           <a href="{{ url_for('html_routes.admin_promocoes') }}"><li><i class="fa-solid fa-percent"></i> Promoções</li></a>
           <a href="{{ url_for('html_routes.admin_adicionarMapa') }}"><li><i class="fa-solid fa-map"></i> Localizaçáo</li></a>
+          
            <a id="sair_admin_normal"><li><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</li></a>
           </ul>
         </nav>
@@ -58,10 +60,7 @@
     </section>
   </main>
   <footer>
-    <center>
-      <p>Todos os direitos reservados</p>
-      <p>Desenvolvido por <i class="fa-brands fa-github"></i> pauloandreoliv</p>
-    </center>
+
   </footer>
   <script src="{{ url_for('static', filename='assets/js/menuAdmin.js') }}"></script>
   <script src="{{ url_for('static', filename='assets/js/logado_admin.js') }}"></script>

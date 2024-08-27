@@ -1,8 +1,12 @@
 from datetime import datetime, timedelta, timezone
-from venv import logger
-from flask import jsonify, Blueprint, request, make_response
+import logging
+from flask import jsonify, Blueprint, logging, request, make_response, current_app
 from . import firebase_service
 from .token import authentication
+import random
+import string
+from flask_mail import  Message
+from config import Config
 
 api_routes = Blueprint('api_routes', __name__)
 
@@ -104,11 +108,54 @@ def get_usuario():
             return jsonify({"error": "Usuário não encontrado"}), 404
     except ValueError as e:
         return jsonify({"error": str(e)}), 401
+    
+@api_routes.route('/enviarEmail', methods=['POST'])
+def recuperar_senha():
+    data = request.get_json()
+    email = data.get('email')
+    
+    try:
+        nova_senha = gerar_senha_aleatoria()
+        
+        if firebase_service.atualizar_senha_usuario(email, nova_senha):
+            msg = Message("Recuperação de Senha",
+                          recipients=[email])
+            msg.body = f"""
+        NÃO RESPONDA ESSE E-MAIL
+            
+        Olá,
+
+        Como foi solicitado, sua senha foi redefinida. 
+            
+        Aqui está sua nova senha:
+        Senha: {nova_senha}
+
+        Por favor, tente fazer login com a nova senha.
+
+        Atenciosamente,
+        Green Burguer
+            """
+            # Testa o envio do e-mail
+            current_app.mail.send(msg)
+               
+            return jsonify({'message': 'Email Enviado com sucesso!'}), 200
+        else:
+            return jsonify({"error": "Usuário não encontrado"}), 404
+    
+    except Exception as e:
+        return jsonify({"error": "Erro interno no servidor: " + str(e)}), 500
+def gerar_senha_aleatoria(tamanho=8):
+    caracteres = string.ascii_letters + string.digits
+    return ''.join(random.choice(caracteres) for i in range(tamanho))
 
 #----------------------------------------------Pedidos----------------------------------------------------------------
 
 @api_routes.route("/add_pedido", methods=['POST'])
 def create__pedido():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401   
+    
     now = datetime.now(timezone.utc)
     offset = timedelta(hours=-3)
     now_local = now + offset
@@ -127,22 +174,44 @@ def create__pedido():
     except Exception as e:
         return jsonify({'message': str(e)}), 500
     
+@api_routes.route("/pedidosHoje", methods=['GET'])
+def pedidos_hoje():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401   
+    
+    try:
 
+        inicio_do_dia = datetime(2024, 8, 25, 0, 0, 0, tzinfo=timezone.utc)
+        fim_do_dia = datetime(2024, 8, 25, 23, 59, 59, 999999, tzinfo=timezone.utc)
+
+
+        pedidos_hoje = firebase_service.get_orders_by_date(inicio_do_dia, fim_do_dia)
+        
+        return jsonify(pedidos_hoje), 200
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
 
 @api_routes.route('/historico/<cpf>', methods=['GET'])
 def visualizar_historico_produtos(cpf):
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401   
     try:
         historico = firebase_service.Get_pedidos(cpf)
         return jsonify({"historico": historico}), 200
     except Exception as e:
-        logger.error(f"An Error Occurred: {e}")
+        logging .error(f"An Error Occurred: {e}")
         return f"An Error Occurred: {e}", 500
     
 
 @api_routes.route('/historicoAdmin', methods=['GET'])
 def historico_admin():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401   
     try:
-        pedidos = firebase_service.getAll_pedidos()
+        pedidos = firebase_service.get_all_orders()
         if pedidos is None:
             pedidos = [] 
         return jsonify(pedidos)
@@ -194,6 +263,9 @@ def loginAdim():
 #-------------------------------Area Produdo--------------------------------------
 @api_routes.route('/add_prato', methods=['POST'])
 def add_prato():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401   
     try:
         dados = request.json
         nome = dados.get('nome')
@@ -214,6 +286,9 @@ def add_prato():
 
 @api_routes.route('/delete_prato/<id>', methods=['DELETE'])
 def remove_prato(id):
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401   
     try:
         firebase_service.delete_prato(id)
         return jsonify({'message': 'Prato excluído com sucesso!'}), 200
@@ -224,6 +299,9 @@ def remove_prato(id):
 
 @api_routes.route('/get_pratos', methods=['GET'])
 def get_pratos():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401   
     try:
         pratos = firebase_service.Get_pratos()  
         return jsonify(pratos)
@@ -237,6 +315,9 @@ def get_pratos():
 #-------------------------------Area Promoção--------------------------------------
 @api_routes.route('/add_promotion', methods=['POST'])
 def add_promotion():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401   
     data = request.get_json()
     nome = data.get('nome')
     url_img = data.get('url_img')
@@ -247,16 +328,26 @@ def add_promotion():
     except Exception as e:
         return jsonify({'message': str(e)}), 500
 
+
+
 @api_routes.route('/delete_promotion/<id>', methods=['DELETE'])
 def delete_promotion(id):
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401  
     try:
         firebase_service.delete_promotion(id)
         return jsonify({'message': 'Promoção excluída com sucesso!'}), 200
     except Exception as e:
         return jsonify({'message': str(e)}), 500
-    
+
+
+
 @api_routes.route('/get_promotions', methods=['GET'])
 def get_promocao():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401  
     try:
         promocao = firebase_service.Get_promotion()  
         return jsonify(promocao)
@@ -268,6 +359,9 @@ def get_promocao():
 #-------------------------------Area Unidade--------------------------------------
 @api_routes.route('/add_restaurant', methods=['POST'])
 def add_restaurant():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401  
     data = request.get_json()
     nome = data.get('nome')
     endereco = data.get('endereco')
@@ -281,10 +375,13 @@ def add_restaurant():
         return jsonify({'message': str(e)}), 500
 
 
-@api_routes.route('/delete_restaurant/<nome>', methods=['DELETE'])
-def delete_restaurant(nome):
+@api_routes.route('/delete_restaurant/<id>', methods=['DELETE'])
+def delete_restaurant(id):
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401  
     try:
-        firebase_service.delete_restaurant(nome)
+        firebase_service.delete_restaurant(id)
         return jsonify({'message': 'Unidade excluída com sucesso!'}), 200
     except Exception as e:
         return jsonify({'message': str(e)}), 500
@@ -292,11 +389,13 @@ def delete_restaurant(nome):
 
 @api_routes.route('/unidades', methods=['GET'])
 def listar_unidades():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401  
     try:
         unidades = firebase_service.Get_unidades()
         return jsonify({"unidades": unidades}), 200
     except Exception as e:
-        logger.error(f"An Error Occurred: {e}")
         return f"An Error Occurred: {e}", 500
 
 

@@ -51,7 +51,14 @@ def admin_pedidos():
 def admin_pedidosDiario():
     return render_template("admin_pedidosDiario.html")
 
+@html_routes.route("/esqueciSenha")
+def esqueciSenha():
+    return render_template("esqueciSenha.html")
 
+
+@html_routes.route("/admin_verLocalizacao")
+def admin_verLocalizacao():
+    return render_template("admin_verLocalizacao.html")
 
 @html_routes.route("/admin_promocoes")
 def admin_promocoes():

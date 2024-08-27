@@ -207,6 +207,31 @@ section.direita#cardapio .container .box_item p {
   margin-top: 5px;
 }
 
+.box_unidade {
+  width: 350px;
+  height: fit-content;
+  min-height: 380px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: white;
+  box-shadow: -1px 1px 20px #0000000f;
+  text-align: justify;
+  overflow: hidden;
+}
+
+.box_unidade p {
+  font-size: 15px;
+}
+
+.box_unidade img {
+  width: 355px;
+  height: 200px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+
 .box_index {
   width: 230px;
   height: 150px;

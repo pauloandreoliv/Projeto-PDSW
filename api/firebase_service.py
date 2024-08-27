@@ -1,5 +1,8 @@
 import firebase_admin
 from firebase_admin import credentials, firestore, db
+from datetime import datetime, timezone
+from flask_mail import Mail, Message
+from flask import current_app
 
 
 def initialize_firebase():
@@ -50,7 +53,7 @@ def delete_promotion(promotion_id):
     doc_ref = db.collection('promocao').document(promotion_id)
     doc_ref.delete()
 
-def add_unidade(nome, url_img, endereco, mapa):
+def add_unidade(nome, endereco, url_img, mapa):
     doc_ref = db.collection('unidade').add({
         'nome': nome,
         'url_img': url_img,
@@ -151,10 +154,86 @@ def Get_pedidos(cpf):
         historico.append(pedido_data)
     return historico
 
-def getAll_pedidos():
-    pedidos_ref = db.collection('pedido')
-    historico = []
-    for pedido in pedidos_ref.stream():
-        pedido_data = pedido.to_dict()
-        historico.append(pedido_data)
-    return historico
+
+def get_all_orders():
+    try:
+        pedidos_ref = db.collection('pedido')
+        pedidos = pedidos_ref.stream()
+        pedidos_list = []
+
+        for pedido in pedidos:
+            pedido_dict = pedido.to_dict()
+            pedido_dict['id'] = pedido.id  
+            pedidos_list.append(pedido_dict)
+
+        return pedidos_list
+    except Exception as e:
+        raise RuntimeError(f"Erro ao buscar pedidos: {str(e)}")
+    
+
+
+def get_orders_by_date(inicio_do_dia, fim_do_dia):
+    try:
+        pedidos_ref = db.collection('pedido')
+        pedidos = pedidos_ref.stream()
+        pedidos_list = []
+
+        print(f"Início do dia: {inicio_do_dia}")  # Log para verificar início do dia
+        print(f"Fim do dia: {fim_do_dia}")        # Log para verificar fim do dia
+        
+        for pedido in pedidos:
+            pedido_dict = pedido.to_dict()
+            data_str = pedido_dict.get('data')
+            
+            print(f"Data recuperada: {data_str}")  # Log para ver a data recuperada
+            
+            if data_str:
+                try:
+                    # Ajuste do formato da data
+                    data = datetime.strptime(data_str, "%d de %B de %Y às %H:%M:%S")
+                    data_timestamp = data.replace(tzinfo=timezone.utc)
+                    
+                    print(f"Data convertida: {data_timestamp}")  # Log para ver a data convertida
+                    
+                    # Filtra pelo intervalo de datas
+                    if inicio_do_dia <= data_timestamp <= fim_do_dia:
+                        print(f"Pedido dentro do intervalo: {pedido_dict}")  # Log para pedidos dentro do intervalo
+                        pedido_dict['id'] = pedido.id 
+                        pedidos_list.append(pedido_dict)
+                    else:
+                        print(f"Pedido fora do intervalo: {data_timestamp}")  # Log para pedidos fora do intervalo
+                except ValueError as e:
+                    print(f"Erro ao converter data para o pedido {pedido.id}: {data_str} - {e}")
+
+        print(f"Pedidos encontrados: {len(pedidos_list)}")  # Log para ver o número de pedidos encontrados
+        return pedidos_list
+    except Exception as e:
+        raise RuntimeError(f"Erro ao buscar pedidos: {str(e)}")
+    
+
+
+
+def get_user_by_email(email):
+    users_ref = db.collection('usuario')
+    query = users_ref.where('email', '==', email).stream()
+    
+    for user in query:
+        return user.to_dict()
+    return None
+
+def send_email(to, subject, body):
+    mail = Mail(current_app)
+    msg = Message(subject, recipients=[to])
+    msg.body = body
+    mail.send(msg)
+
+def atualizar_senha_usuario(email, nova_senha):
+    usuarios_ref = db.collection('usuario')
+    query = usuarios_ref.where('email', '==', email).stream()
+
+    for usuario in query:
+        doc_ref = db.collection('usuario').document(usuario.id)
+        doc_ref.update({'senha': nova_senha})
+        return True
+
+    return False  # Se o e-mail não for encontrado, retornar False

@@ -76,8 +76,7 @@ async function mostrarTudo() {
 
         const pedidos = await response.json();
         const container = document.getElementById('mostrarPedidosAdmin');
-        container.innerHTML = ""; // Limpa o conteúdo atual
-
+        container.innerHTML = ""; 
         if (!Array.isArray(pedidos) || pedidos.length === 0) {
             container.innerHTML = `
                 <article id="Sem_Historico">
@@ -113,6 +112,63 @@ async function mostrarTudo() {
         console.error('Erro ao buscar pedidos:', error);
     }
 }
+
+async function mostrarPedidosHoje() {
+    try {
+        const response = await fetch('/pedidosHoje', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Erro ao buscar pedidos: ${response.status} ${errorText}`);
+        }
+
+        const pedidosHoje = await response.json(); // Já filtrado na API
+        console.log("Pedidos de hoje recebidos:", pedidosHoje);
+
+        const container = document.getElementById('mostrarPedidosAdmin');
+        container.innerHTML = ""; // Limpa o conteúdo atual
+
+        if (pedidosHoje.length === 0) {
+            container.innerHTML = `
+                <article id="Sem_Historico">
+                    <h4>Sem pedidos no momento</h4>
+                </article>`;
+        } else {
+            pedidosHoje.forEach(pedido => {
+                const valorTotal = pedido.total || 0;
+                const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
+                const dataPedido = pedido.data;
+                const endereco = pedido.endereco;
+                const telefone = pedido.telefone_cliente;
+                const formaDePagamento = pedido.formadepgmto;
+
+                const pedidoDiv = document.createElement('article');
+                pedidoDiv.classList.add("box_pedido");
+
+                pedidoDiv.innerHTML = `
+                    <h4>${endereco}</h4>
+                    <ul>
+                        <li>Data: ${dataPedido}</li>
+                        <li>Telefone: ${telefone}</li>
+                        <li>Forma de Pagamento: ${formaDePagamento}</li>
+                        <li>Valor Total: R$ ${valorTotal.toFixed(2)}</li>
+                    </ul>
+                    <h5>Itens:</h5>
+                    <p>${itens.map(item => item.nome).join(", ")}</p>
+                `;
+                container.appendChild(pedidoDiv);
+            });
+        }
+    } catch (error) {
+        console.error('Erro ao buscar pedidos:', error);
+    }
+}
+
 window.addEventListener('load', function() {
     const caminho = window.location.pathname;
     if (caminho === '/pedidos') {
@@ -121,6 +177,9 @@ window.addEventListener('load', function() {
     if (caminho === '/admin_pedidos') {
         mostrarTudo ();
     }
+    if(caminho === '/admin_pedidosDiario'){
+        mostrarPedidosHoje()
+        }
 });
 
 

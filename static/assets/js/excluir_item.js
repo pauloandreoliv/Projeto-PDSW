@@ -2,6 +2,7 @@
 import { mostrarPopup } from "./popup.js";
 import { mostrarPratosAdmin} from "./mostrar_pratosepromocoes.js";
 import { mostrarPromoAdmin } from "./mostrar_pratosepromocoes.js";
+import {buscarUnidadesAdmin} from "./localizacao.js";
 
 function removerPrato(id) {
     fetch(`/delete_prato/${id}`, {
@@ -23,9 +24,29 @@ function removerPrato(id) {
     });
 }
 
+function removerUnidade(id) {
+    fetch(`/delete_restaurant/${id}`, { 
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            mostrarPopup("Unidade Excluída com sucesso.");
+            buscarUnidadesAdmin();
+        } else {
+            throw new Error("Erro ao excluir a unidade.");
+        }
+    })
+    .catch((error) => {
+        mostrarPopup("Erro. Tente novamente.");
+    });
+}
+
 
 window.removerPrato = removerPrato;
-
+window.removerUnidade = removerUnidade;
 
 window.removerPromocao = removerPromocao;
 
@@ -38,10 +59,10 @@ function removerPromocao(id) {
     })
     .then(response => {
         if (response.ok) {
-            mostrarPopup("Excluído com sucesso.");
-            mostrarPromoAdmin(); // Atualiza a lista de promoções
+            mostrarPopup("Promoção excluído com sucesso.");
+            mostrarPromoAdmin();
         } else {
-            throw new Error("Erro ao excluir promoção.");
+            throw new Error("Erro ao excluir a Promoção.");
         }
     })
     .catch((error) => {
@@ -49,18 +70,7 @@ function removerPromocao(id) {
     });
 }
 
-export { removerPromocao };
 
-
-
-function remover (id){
-    var url = window.location.href;
-    if (url.includes('/admin_verpromocoes.html')) {
-        removerPromocao(id);
-     } else {
-        removerPrato(id);
-     }
-}
 
 function adicionarListenerBotoes() {
     const botoes = document.getElementsByTagName('button');
@@ -72,4 +82,4 @@ function adicionarListenerBotoes() {
     }
   }
   
-export { adicionarListenerBotoes, removerPrato };
+export { adicionarListenerBotoes, removerPrato, removerPromocao, removerUnidade };
