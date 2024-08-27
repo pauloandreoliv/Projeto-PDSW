@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', () => {
+    buscarUnidades();
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const caminho = window.location.pathname;
@@ -89,5 +93,3 @@ async function buscarUnidadesAdmin() {
         console.error('Erro ao buscar unidades:', error);
     }
 }
-
-export { buscarUnidadesAdmin };

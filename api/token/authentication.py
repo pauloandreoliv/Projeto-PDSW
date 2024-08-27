@@ -3,7 +3,7 @@ import datetime
 
 def gerar_token(id):
     chave_secreta = '123@chaveSecreta'
-    timestamp_expiracao = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=2)
+    timestamp_expiracao = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=1)
     json = {
         'id': id,
         'exp': timestamp_expiracao

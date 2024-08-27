@@ -1,82 +1,94 @@
-
-async function buscarHistoricoPedidos() {
+import { mostrarPopup } from "./popup.js";
+function buscarHistoricoPedidos() {
     const id = localStorage.getItem("cpf");
 
     if (!id) {
-        console.error("cpf não encontrado no localStorage.");
+        console.error("CPF não encontrado no localStorage.");
         return;
     }
 
-    try {
-      
-        const response = await fetch(`/historico/${id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+    fetch(`/historico/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 401) {
+                    localStorage.clear()
+                    mostrarPopup('Token Expirado');
+                    return Promise.reject('Token expirado');
+                }
+                return response.text().then(text => {
+                    throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}. ${text}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            const historico = data.historico;
 
-        if (!response.ok) {
-            throw new Error('Erro ao buscar o histórico de pedidos');
-        }
+            console.log(historico); 
 
-        const data = await response.json();
-        const historico = data.historico;
+            const container = document.getElementById("mostrarPedidos");
+            container.innerHTML = "";
 
-        console.log(historico); 
+            if (!Array.isArray(historico) || historico.length === 0) {
+                container.innerHTML = `
+                    <article id="Sem_Historico">
+                        <h4>Você ainda não fez pedidos :(</h4>
+                        <h5>Que tal provar algo novo?</h5>
+                    </article>`;
+            } else {
+                historico.forEach(pedido => {
+                    const valorTotal = pedido.total || 0;
+                    const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
+                    const dataPedido = pedido.data;
+                    const formadepgmto = pedido.formadepgmto;
 
-        const container = document.getElementById("mostrarPedidos");
-        container.innerHTML = ""; 
-
-        if (!Array.isArray(historico) || historico.length === 0) {
-   
-            container.innerHTML = `
-                <article id="Sem_Historico">
-                    <h4>Você ainda não fez pedidos :(</h4>
-                    <h5>Que tal provar algo novo?</h5>
-                </article>`;
-        } else {
-        
-            historico.forEach(pedido => {
-           
-                const valorTotal = pedido.total || 0;
-                const data = pedido.data
-                const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
-                const dataPedido = pedido.data;
-                const formadepgmto = pedido.formadepgmto;
-                
-                const artigoPedido = document.createElement('article');
-                artigoPedido.classList.add("box_pedido");
-                artigoPedido.innerHTML = `
-                    <h5>Data: ${dataPedido}</h5>
-                    <p>Pratos: ${itens.map(item => item.nome).join(", ")}</p>
-                    <h5>Valor: R$ ${valorTotal.toFixed(2)}</h5>
-                    <p>Pagamento: ${formadepgmto}</p>
-                `;
-                container.appendChild(artigoPedido);
-            });
-        }
-    } catch (error) {
+                    const artigoPedido = document.createElement('article');
+                    artigoPedido.classList.add("box_pedido");
+                    artigoPedido.innerHTML = `
+                        <h5>Data: ${dataPedido}</h5>
+                        <p>Pratos: ${itens.map(item => item.nome).join(", ")}</p>
+                        <h5>Valor: R$ ${valorTotal.toFixed(2)}</h5>
+                        <p>Pagamento: ${formadepgmto}</p>
+                    `;
+                    container.appendChild(artigoPedido);
+                });
+            }
+    })
+    .catch(error => {
         console.error("Erro ao buscar o histórico de pedidos:", error);
-    }
+        mostrarPopup("Erro ao buscar o histórico de pedidos.");
+    });
 }
 
-async function mostrarTudo() {
-    try {
-        const response = await fetch('/historicoAdmin', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
+function mostrarTudo() {
+    fetch('/historicoAdmin', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
         if (!response.ok) {
-            throw new Error('Erro ao buscar pedidos');
+            if (response.status === 401) {
+                localStorage.clear()
+                window.location.href = "/entrar";
+                return Promise.reject('Token expirado');
+            }
+            return response.text().then(text => {
+                throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}. ${text}`);
+            });
         }
-
-        const pedidos = await response.json();
+        return response.json();
+    })
+    .then(pedidos => {
         const container = document.getElementById('mostrarPedidosAdmin');
-        container.innerHTML = ""; 
+        container.innerHTML = "";
+
         if (!Array.isArray(pedidos) || pedidos.length === 0) {
             container.innerHTML = `
                 <article id="Sem_Historico">
@@ -108,26 +120,35 @@ async function mostrarTudo() {
                 container.appendChild(pedidoDiv);
             });
         }
-    } catch (error) {
+    })
+    .catch(error => {
         console.error('Erro ao buscar pedidos:', error);
-    }
+    });
 }
 
-async function mostrarPedidosHoje() {
-    try {
-        const response = await fetch('/pedidosHoje', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
 
+
+function mostrarPedidosHoje() {
+    fetch('/pedidosHoje', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
         if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Erro ao buscar pedidos: ${response.status} ${errorText}`);
+            if (response.status === 401) {
+                localStorage.clear()
+                window.location.href = "/entrar";
+                return Promise.reject('Token expirado');
+            }
+            return response.text().then(text => {
+                throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}. ${text}`);
+            });
         }
-
-        const pedidosHoje = await response.json(); // Já filtrado na API
+        return response.json();
+    })
+    .then(pedidosHoje => {
         console.log("Pedidos de hoje recebidos:", pedidosHoje);
 
         const container = document.getElementById('mostrarPedidosAdmin');
@@ -164,9 +185,10 @@ async function mostrarPedidosHoje() {
                 container.appendChild(pedidoDiv);
             });
         }
-    } catch (error) {
+    })
+    .catch(error => {
         console.error('Erro ao buscar pedidos:', error);
-    }
+    });
 }
 
 window.addEventListener('load', function() {
@@ -183,3 +205,4 @@ window.addEventListener('load', function() {
 });
 
 
+window.onload = buscarHistoricoPedidos;

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
-import logging
-from flask import jsonify, Blueprint, logging, request, make_response, current_app
+
+from flask import jsonify, Blueprint, request, make_response, current_app
 from . import firebase_service
 from .token import authentication
 import random
@@ -152,9 +152,7 @@ def gerar_senha_aleatoria(tamanho=8):
 
 @api_routes.route("/add_pedido", methods=['POST'])
 def create__pedido():
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401   
+
     
     now = datetime.now(timezone.utc)
     offset = timedelta(hours=-3)
@@ -178,10 +176,11 @@ def create__pedido():
 def pedidos_hoje():
     token = request.cookies.get('auth_token')
     if not token:
-        return jsonify({"error": "Token não encontrado"}), 401   
-    
+        return jsonify({"error": "Token não encontrado"}), 401  
     try:
-
+        token_result = authentication.validar_token(token)
+        if isinstance(token_result, tuple):  
+            return token_result
         inicio_do_dia = datetime(2024, 8, 25, 0, 0, 0, tzinfo=timezone.utc)
         fim_do_dia = datetime(2024, 8, 25, 23, 59, 59, 999999, tzinfo=timezone.utc)
 
@@ -196,21 +195,27 @@ def pedidos_hoje():
 def visualizar_historico_produtos(cpf):
     token = request.cookies.get('auth_token')
     if not token:
-        return jsonify({"error": "Token não encontrado"}), 401   
+        return jsonify({"error": "Token não encontrado"}), 401  
     try:
+        token_result = authentication.validar_token(token)
+        if isinstance(token_result, tuple):  
+            return token_result
+
         historico = firebase_service.Get_pedidos(cpf)
         return jsonify({"historico": historico}), 200
     except Exception as e:
-        logging .error(f"An Error Occurred: {e}")
-        return f"An Error Occurred: {e}", 500
+        return f"An Error Occurred: {e}", 401
     
 
 @api_routes.route('/historicoAdmin', methods=['GET'])
 def historico_admin():
     token = request.cookies.get('auth_token')
     if not token:
-        return jsonify({"error": "Token não encontrado"}), 401   
+        return jsonify({"error": "Token não encontrado"}), 401  
     try:
+        token_result = authentication.validar_token(token)
+        if isinstance(token_result, tuple):  
+            return token_result
         pedidos = firebase_service.get_all_orders()
         if pedidos is None:
             pedidos = [] 
@@ -263,9 +268,7 @@ def loginAdim():
 #-------------------------------Area Produdo--------------------------------------
 @api_routes.route('/add_prato', methods=['POST'])
 def add_prato():
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401   
+
     try:
         dados = request.json
         nome = dados.get('nome')
@@ -286,9 +289,7 @@ def add_prato():
 
 @api_routes.route('/delete_prato/<id>', methods=['DELETE'])
 def remove_prato(id):
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401   
+
     try:
         firebase_service.delete_prato(id)
         return jsonify({'message': 'Prato excluído com sucesso!'}), 200
@@ -299,9 +300,7 @@ def remove_prato(id):
 
 @api_routes.route('/get_pratos', methods=['GET'])
 def get_pratos():
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401   
+
     try:
         pratos = firebase_service.Get_pratos()  
         return jsonify(pratos)
@@ -315,9 +314,7 @@ def get_pratos():
 #-------------------------------Area Promoção--------------------------------------
 @api_routes.route('/add_promotion', methods=['POST'])
 def add_promotion():
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401   
+
     data = request.get_json()
     nome = data.get('nome')
     url_img = data.get('url_img')
@@ -331,10 +328,7 @@ def add_promotion():
 
 
 @api_routes.route('/delete_promotion/<id>', methods=['DELETE'])
-def delete_promotion(id):
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401  
+def delete_promotion(id): 
     try:
         firebase_service.delete_promotion(id)
         return jsonify({'message': 'Promoção excluída com sucesso!'}), 200
@@ -345,9 +339,7 @@ def delete_promotion(id):
 
 @api_routes.route('/get_promotions', methods=['GET'])
 def get_promocao():
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401  
+
     try:
         promocao = firebase_service.Get_promotion()  
         return jsonify(promocao)
@@ -359,9 +351,7 @@ def get_promocao():
 #-------------------------------Area Unidade--------------------------------------
 @api_routes.route('/add_restaurant', methods=['POST'])
 def add_restaurant():
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401  
+ 
     data = request.get_json()
     nome = data.get('nome')
     endereco = data.get('endereco')
@@ -377,9 +367,6 @@ def add_restaurant():
 
 @api_routes.route('/delete_restaurant/<id>', methods=['DELETE'])
 def delete_restaurant(id):
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401  
     try:
         firebase_service.delete_restaurant(id)
         return jsonify({'message': 'Unidade excluída com sucesso!'}), 200
@@ -389,9 +376,6 @@ def delete_restaurant(id):
 
 @api_routes.route('/unidades', methods=['GET'])
 def listar_unidades():
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401  
     try:
         unidades = firebase_service.Get_unidades()
         return jsonify({"unidades": unidades}), 200

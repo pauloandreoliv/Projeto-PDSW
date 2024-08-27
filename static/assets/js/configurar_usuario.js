@@ -4,7 +4,10 @@ function carregarDados() {
         .then(response => {
             if (!response.ok) {
                 if (response.status === 401) {
+                    localStorage.clear()
+                    mostrarPopup('Token Expirado');
                     window.location.href = "/entrar";
+
                     return;
                 }
                 return response.text().then(text => {
@@ -50,6 +53,8 @@ function atualizarUsuario() {
         .then(response => {
             if (!response.ok) {
                 if (response.status === 401) {
+                    localStorage.clear()
+                    mostrarPopup('Token Expirado');
                     window.location.href = "/entrar";
                     return;
                 }
