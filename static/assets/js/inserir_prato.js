@@ -24,7 +24,7 @@ cadastrarButton.addEventListener('click', (event) => {
         url_img: inputUrl
       };
 
-      // Enviar dados para a rota Flask
+  
       fetch('/add_prato', {
         method: "POST",
         headers: {
@@ -36,6 +36,7 @@ cadastrarButton.addEventListener('click', (event) => {
       .then(data => {
         if (data.success) {
           mostrarPopup('Prato criado com sucesso!');
+          
         } else {
           mostrarPopup(data.message || 'Erro ao criar o prato.');
         }
@@ -48,3 +49,5 @@ cadastrarButton.addEventListener('click', (event) => {
     mostrarPopup(error.message);
   }
 });
+
+

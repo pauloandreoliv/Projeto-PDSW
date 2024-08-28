@@ -40,11 +40,13 @@ async function buscarHistoricoPedidos() {
                 const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
                 const dataPedido = pedido.data;
                 const formadepgmto = pedido.formadepgmto;
+                const endereco = pedido.endereco
 
                 const artigoPedido = document.createElement('article');
                 artigoPedido.classList.add("box_pedido");
                 artigoPedido.innerHTML = `
                     <h5>Data: ${dataPedido}</h5>
+                    <h6>Endereço: ${endereco}</h6>
                     <p>Pratos: ${itens.map(item => item.nome).join(", ")}</p>
                     <h5>Valor: R$ ${valorTotal.toFixed(2)}</h5>
                     <p>Pagamento: ${formadepgmto}</p>
@@ -114,13 +116,19 @@ function mostrarPedidosHoje() {
             'Content-Type': 'application/json',
         },
     })
-    .then(response => response.json())  
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(pedidosHoje => {
         console.log("Pedidos de hoje recebidos:", pedidosHoje);
 
         const container = document.getElementById('mostrarPedidosAdmin');
-        container.innerHTML = ""; 
-        if (pedidosHoje.length === 0) {
+        container.innerHTML = "";
+
+        if (!Array.isArray(pedidosHoje) || pedidosHoje.length === 0) {
             container.innerHTML = `
                 <article id="Sem_Historico">
                     <h4>Sem pedidos no momento</h4>
@@ -129,10 +137,10 @@ function mostrarPedidosHoje() {
             pedidosHoje.forEach(pedido => {
                 const valorTotal = pedido.total || 0;
                 const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
-                const dataPedido = pedido.data;
-                const endereco = pedido.endereco;
-                const telefone = pedido.telefone_cliente;
-                const formaDePagamento = pedido.formadepgmto;
+                const dataPedido = pedido.data || 'Não disponível';
+                const endereco = pedido.endereco || 'Não disponível';
+                const telefone = pedido.telefone_cliente || 'Não disponível';
+                const formaDePagamento = pedido.formadepgmto || 'Não disponível';
 
                 const pedidoDiv = document.createElement('article');
                 pedidoDiv.classList.add("box_pedido");
@@ -154,6 +162,11 @@ function mostrarPedidosHoje() {
     })
     .catch(error => {
         console.error('Erro ao buscar pedidos:', error);
+       
+        document.getElementById('mostrarPedidosAdmin').innerHTML = `
+            <article id="Erro">
+                <h4>Erro ao carregar pedidos: ${error.message}</h4>
+            </article>`;
     });
 }
 

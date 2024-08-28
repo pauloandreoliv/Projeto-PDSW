@@ -4,7 +4,7 @@ import { mostrarPopup } from './popup.js';
 const containerPedidos = document.getElementById("pedidos");
 const botao_limpar = document.getElementById("botao_limpar");
 const botao_comprar = document.getElementById("botao_comprar");
-const totalElement = document.getElementById("total"); // Elemento onde o total será exibido
+const totalElement = document.getElementById("total"); 
 let listaDeItens = [];
 let total = 0;
 

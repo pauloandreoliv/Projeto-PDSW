@@ -3,7 +3,7 @@ from firebase_admin import credentials, firestore, db
 from datetime import datetime, timezone
 from flask_mail import Mail, Message
 from flask import current_app
-
+import pytz
 
 def initialize_firebase():
     cred = credentials.Certificate('api\key\key.json')
@@ -36,7 +36,7 @@ def add_prato (nome, valor, url):
         'url_img': url,
         'valor': valor
     })
-    #doc_id = doc_ref[1].id 
+
 
 def delete_prato(prato_id):
     doc_ref = db.collection('prato').document(prato_id)
@@ -171,46 +171,47 @@ def get_all_orders():
         raise RuntimeError(f"Erro ao buscar pedidos: {str(e)}")
     
 
-
 def get_orders_by_date(inicio_do_dia, fim_do_dia):
     try:
         pedidos_ref = db.collection('pedido')
         pedidos = pedidos_ref.stream()
         pedidos_list = []
 
-        print(f"Início do dia: {inicio_do_dia}")  # Log para verificar início do dia
-        print(f"Fim do dia: {fim_do_dia}")        # Log para verificar fim do dia
+        print(f"Início do dia: {inicio_do_dia}") 
+        print(f"Fim do dia: {fim_do_dia}")        
         
         for pedido in pedidos:
             pedido_dict = pedido.to_dict()
             data_str = pedido_dict.get('data')
             
-            print(f"Data recuperada: {data_str}")  # Log para ver a data recuperada
+            print(f"Data recuperada: {data_str}")  
             
             if data_str:
                 try:
-                    # Ajuste do formato da data
+
+                    data_str = data_str.replace('UTC-3', '').strip()
                     data = datetime.strptime(data_str, "%d de %B de %Y às %H:%M:%S")
-                    data_timestamp = data.replace(tzinfo=timezone.utc)
                     
-                    print(f"Data convertida: {data_timestamp}")  # Log para ver a data convertida
+                
+                    data = data.replace(tzinfo=pytz.timezone('America/Sao_Paulo'))
+                    data_timestamp = data.astimezone(timezone.utc)
                     
-                    # Filtra pelo intervalo de datas
+                    print(f"Data convertida: {data_timestamp}")  
+                    
+               
                     if inicio_do_dia <= data_timestamp <= fim_do_dia:
-                        print(f"Pedido dentro do intervalo: {pedido_dict}")  # Log para pedidos dentro do intervalo
+                        print(f"Pedido dentro do intervalo: {pedido_dict}")  
                         pedido_dict['id'] = pedido.id 
                         pedidos_list.append(pedido_dict)
                     else:
-                        print(f"Pedido fora do intervalo: {data_timestamp}")  # Log para pedidos fora do intervalo
+                        print(f"Pedido fora do intervalo: {data_timestamp}")  
                 except ValueError as e:
                     print(f"Erro ao converter data para o pedido {pedido.id}: {data_str} - {e}")
 
-        print(f"Pedidos encontrados: {len(pedidos_list)}")  # Log para ver o número de pedidos encontrados
+        print(f"Pedidos encontrados: {len(pedidos_list)}") 
         return pedidos_list
     except Exception as e:
         raise RuntimeError(f"Erro ao buscar pedidos: {str(e)}")
-    
-
 
 
 def get_user_by_email(email):
@@ -236,4 +237,4 @@ def atualizar_senha_usuario(email, nova_senha):
         doc_ref.update({'senha': nova_senha})
         return True
 
-    return False  # Se o e-mail não for encontrado, retornar False
+    return False 

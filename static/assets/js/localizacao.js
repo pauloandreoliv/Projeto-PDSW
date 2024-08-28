@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (caminho === '/admin_verLocalizacao') {
         buscarUnidadesAdmin();
     }
+    else if (caminho === '/localizacao_user') {
+        buscarUnidades();
+    }
 });
 
 
@@ -60,8 +63,7 @@ function toggleView(unidadeDiv, unidade) {
 }
 
 
-
-async function buscarUnidadesAdmin() {
+ async function buscarUnidadesAdmin() {
     try {
         const response = await fetch('/unidades');
         if (!response.ok) throw new Error('Erro ao buscar unidades');
@@ -93,3 +95,6 @@ async function buscarUnidadesAdmin() {
         console.error('Erro ao buscar unidades:', error);
     }
 }
+
+
+export{buscarUnidadesAdmin, buscarUnidades}

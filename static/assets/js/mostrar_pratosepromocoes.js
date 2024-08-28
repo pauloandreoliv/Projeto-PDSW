@@ -1,5 +1,7 @@
 
 
+import { removerPromocao } from './excluir_item.js';
+
 function fetchData(endpoint) {
     console.log(`Fetching data from ${endpoint}`);  
     return fetch(endpoint)
@@ -132,7 +134,7 @@ window.addEventListener('load', function() {
         .then(data => {
             if (data.logged_in) {
                 let comprar = `
-                <form action="/comprar" method="get">
+                <form action="/entrar" method="get">
                     <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;
@@ -155,7 +157,7 @@ window.addEventListener('load', function() {
         .then(data => {
             if (data.logged_in) {
                 let comprar = `
-                <form action="/comprar" method="get">
+                <form action="/entrar" method="get">
                     <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;
@@ -164,7 +166,7 @@ window.addEventListener('load', function() {
                 
             } else {
                 let comprar = `
-                <form action="/cadastrar" method="get">
+                <form action="/entrar" method="get">
                     <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;

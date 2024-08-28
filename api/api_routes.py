@@ -1,15 +1,16 @@
 from datetime import datetime, timedelta, timezone
+import logging
 
-from flask import jsonify, Blueprint, request, make_response, current_app
+from flask import jsonify, Blueprint,  request, make_response, current_app
+import pytz
 from . import firebase_service
 from .token import authentication
 import random
 import string
 from flask_mail import  Message
-from config import Config
+
 
 api_routes = Blueprint('api_routes', __name__)
-
 #-------------------------------Login--------------------------------------
 
 @api_routes.route('/loginUser', methods=['POST'])
@@ -92,6 +93,7 @@ def create_client():
     return jsonify({'message': 'Cadastro realizado com sucesso!'}), 200
 
 
+
 @api_routes.route('/user/<cpf>', methods=['PUT'])
 def update_user(cpf): 
     try:
@@ -100,6 +102,19 @@ def update_user(cpf):
         return jsonify({'message': 'Usuario Atualizado com sucesso!'}), 200
     except Exception as e:
         return f"An Error Occurred: {e}", 500
+
+
+@api_routes.route('/check_cpf/<cpf>', methods=['GET'])
+def check_cpf(cpf):
+    try:
+        type = "usuario"
+        cpf_exists = firebase_service.FindByCpf(cpf,type)
+        if cpf_exists:
+            return jsonify({"exists": True}), 200
+        else:
+            return jsonify({"exists": False}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @api_routes.route('/getUser', methods=['GET'])
@@ -186,16 +201,17 @@ def create__pedido():
 @api_routes.route("/pedidosHoje", methods=['GET'])
 def pedidos_hoje():
     try:
-        inicio_do_dia = datetime(2024, 8, 25, 0, 0, 0, tzinfo=timezone.utc)
-        fim_do_dia = datetime(2024, 8, 25, 23, 59, 59, 999999, tzinfo=timezone.utc)
-
+        agora = datetime.now(pytz.timezone('America/Sao_Paulo'))  # Ajustar para o fuso horário correto
+        inicio_do_dia = agora.replace(hour=0, minute=0, second=0, microsecond=0)
+        fim_do_dia = agora.replace(hour=23, minute=59, second=59, microsecond=999999)
 
         pedidos_hoje = firebase_service.get_orders_by_date(inicio_do_dia, fim_do_dia)
         
         return jsonify(pedidos_hoje), 200
     except Exception as e:
         return jsonify({'message': str(e)}), 500
-
+    
+    
 @api_routes.route('/historico/<cpf>', methods=['GET'])
 def visualizar_historico_produtos(cpf):  
     try:
@@ -286,7 +302,7 @@ def remove_prato(id):
         firebase_service.delete_prato(id)
         return jsonify({'message': 'Prato excluído com sucesso!'}), 200
     except Exception as e:
-        # Log the error for debugging
+    
         print(f"Erro ao excluir prato: {e}")
         return jsonify({'message': 'Erro ao excluir prato. Detalhes: ' + str(e)}), 500
 

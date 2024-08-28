@@ -56,7 +56,7 @@ function inserirData() {
 }
 
 window.addEventListener('load', async function() {
-    // Verifica o token antes de qualquer outra coisa
+    
     const tokenValido = await verificarToken();
     if (!tokenValido) {
         

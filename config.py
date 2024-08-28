@@ -8,5 +8,3 @@ class Config:
     MAIL_PASSWORD = 'aecofcbvlvrvzlyv'
     MAIL_DEFAULT_SENDER = 'webp4531@gmail.com'
 
-
-#ProjetoWeb1@3

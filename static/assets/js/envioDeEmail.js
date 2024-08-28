@@ -7,11 +7,11 @@ entrarButton.addEventListener('click', (event) => {
 
     const inputEmail = document.forms["esqueciSenha"]["inputemail"].value;
     try {
-        // Validação do e-mail
+
         if (!inputEmail || !inputEmail.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
             throw new Error("O e-mail deve seguir o formato padrão.");
         } else {
-            // Envio da solicitação para o backend
+            
             fetch('/enviarEmail', {
                 method: 'POST',
                 headers: {
@@ -22,7 +22,7 @@ entrarButton.addEventListener('click', (event) => {
                 })
             })
             .then(response => {
-                // Verifique se a resposta não é JSON e trate o erro
+               
                 if (!response.ok) {
                     return response.text().then(text => {
                         throw new Error('Erro no servidor: ' + text);

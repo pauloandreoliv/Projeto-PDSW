@@ -20,8 +20,7 @@
         <div id="invisivel">
           <a href="{{ url_for('html_routes.admin_index') }}">Início</a>
           <a href="{{ url_for('html_routes.admin_pedidosDiario') }}">Pedidos</a>
-          <a href="{{ url_for('html_routes.admin_adicionar') }}">Adicionar Pratos</a>
-          <a href="{{ url_for('html_routes.admin_cardapio') }}">Cardápio</a>
+          <a href="{{ url_for('html_routes.admin_adicionar') }}">Cardápio</a>
           <a href="{{ url_for('html_routes.admin_promocoes') }}">Promoções</a>
           <a href="{{ url_for('html_routes.admin_adicionarMapa') }}">Localização</a>
           <a id="sair_admin"> Sair</a>
@@ -72,7 +71,7 @@
             </li>
             <li>
               <label for="inputurlMapa">URL no Google Maps:</label>
-              <input type="url" id="inputurlMapa" name="inputurlMapa" pattern="^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$" required>
+              <input type="url" id="inputurlMapa" name="inputurlMapa" >
             </li>
           </ul>
           <center>

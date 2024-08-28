@@ -47,7 +47,6 @@ function removerUnidade(id) {
 
 window.removerPrato = removerPrato;
 window.removerUnidade = removerUnidade;
-
 window.removerPromocao = removerPromocao;
 
 function removerPromocao(id) {

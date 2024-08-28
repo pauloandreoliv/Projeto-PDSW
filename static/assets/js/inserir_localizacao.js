@@ -19,7 +19,7 @@ cadastrarButton.addEventListener('click', (event) => {
             throw new Error("O Endereço não pode estar vazio");
         } else if (inputUrl.length === 0 || inputUrl == null || inputUrl == undefined || !inputUrl.match(/^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/)) {
             throw new Error("A URL deve seguir o formato padrão.");
-        } else if (inputurlMapa.length === 0 || inputurlMapa == null || inputurlMapa == undefined || !inputurlMapa.match(/^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/)) {
+        } else if (inputurlMapa.length === 0 || inputurlMapa == null || inputurlMapa == undefined ) {
             throw new Error("A URL do Mapa deve seguir o formato padrão.");
         } else {
             const dados = {
