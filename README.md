@@ -1,4 +1,4 @@
-# Restaurante 
+# Restaurante Green Burguer
 
 Bem-vindo ao repositório.
 Este projeto foi desenvolvido utilizando uma combinação de tecnologias modernas para oferecer uma experiência de usuário fluida e eficiente tanto para clientes quanto para administradores.
