@@ -108,13 +108,14 @@ def update_user(cpf):
 def check_cpf(cpf):
     try:
         type = "usuario"
-        cpf_exists = firebase_service.FindByCpf(cpf,type)
-        if cpf_exists:
-            return jsonify({"exists": True}), 200
+        dados = firebase_service.FindByCpf(cpf, type)
+        
+        if not dados:
+            return jsonify({"exists": False}), 200  # CPF não cadastrado
         else:
-            return jsonify({"exists": False}), 200
+            return jsonify({"exists": True}), 200  # CPF já cadastrado
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 50
 
 
 @api_routes.route('/getUser', methods=['GET'])
