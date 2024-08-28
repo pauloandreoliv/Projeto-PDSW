@@ -1,7 +1,7 @@
 # Restaurante Green Burguer
 
 Bem-vindo ao repositório.
-Este projeto foi desenvolvido utilizando uma combinação de tecnologias modernas para oferecer uma experiência de usuário fluida e eficiente tanto para clientes quanto para administradores.
+Este projeto foi desenvolvido utilizando uma combinação de tecnologias para oferecer uma experiência de usuário fluida e eficiente tanto para clientes quanto para administradores.
 
 ## 🔧 Ferramentas Utilizadas
 
@@ -10,16 +10,6 @@ Este projeto foi desenvolvido utilizando uma combinação de tecnologias moderna
 - **HTML/CSS**: Estruturação e estilização das páginas web.
 - **Firebase**: Utilizado como banco de dados para armazenar informações dos usuários, pratos, unidades e promoções.
 - **CSS**: Para design responsivo e componentes de interface.
-
-## 📦 Principais Extensões Flask Instaladas
-
-- **Flask-RESTful**: Para facilitar a criação de APIs RESTful.
-- **Flask-WTF**: Para manipulação e validação de formulários.
-- **Flask-Login**: Gerenciamento de sessões de usuário e autenticação.
-- **Firebase Admin SDK**: Integração com Firebase para manipulação dos dados.
-- **Flask-Mail**: Para envio de e-mails.
-
-
 
 ## 🗂️ Desenho da Arquitetura do Projeto
 
