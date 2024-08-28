@@ -86,14 +86,7 @@ O Teste foi Feito na validação do Token de Usuario.
 ##  📥 Comandos pip install e Importações do Projeto
 ```python
 pip install Flask
-pip install Flask-RESTful
-pip install Flask-WTF
-pip install Flask-Login
-pip install Flask-CORS
-pip install Flask-SQLAlchemy
 pip install firebase-admin
-pip install Flask-Mail
-
 
 O projeto utiliza as Principais importações mas obviamente ao longo dos arquivos podem encontrar outras
 
