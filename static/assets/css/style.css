@@ -1,0 +1,777 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,700&display=swap');
+
+:root {
+  --fundo: #ffffff;
+  --corprimaria: #1f1f1f;
+  --corsecundaria: #00bf63;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bcbcbc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #818181;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#total {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#total:hover {
+  background-color: #e6e6e6;
+  color: #111;
+}
+
+#total span {
+  color: #007bff; /* Destaque para o valor */
+}
+
+
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: var(--fundo);
+  color: var(--corprimaria);
+}
+
+body.body-login {
+  background-color: var(--corsecundaria);
+}
+
+body.body-esqueciEmail {
+  background-color: var(--fundo);
+}
+
+body#admin {
+  background-color: #c2ffe1;
+}
+
+a {
+  color: var(--corprimaria);
+  text-decoration: none;
+}
+
+nav {
+  background-color: white;
+  width: 100%;
+  padding: 15px;
+  box-shadow: -1px 1px 20px #0000000f;
+  z-index: 1;
+  position: fixed;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+nav .logo {
+  width: 35px;
+  height: 35px;
+  margin-right: 55px;
+  background-image: url(https://i.imgur.com/z0oKU2l.png);
+  background-size: contain;
+  border-radius: 50%;
+  float: left;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+nav .logo:hover {
+  opacity: 0.5;
+}
+
+nav #responsivo {
+  display: none;
+}
+
+nav #normal {
+  display: flex;
+}
+
+nav #normal .logo {
+  display: block;
+}
+
+nav a {
+  width: fit-content;
+  padding: 5px;
+  margin-right: 7.5%;
+  transition: 0.1s;
+}
+
+nav a:hover {
+  font-weight: bold;
+  border-bottom: var(--corsecundaria) 2px solid;
+}
+
+nav #responsivo {
+  display: none;
+}
+
+nav #responsivo #botao_menu {
+  position: absolute;
+  margin-left: 76%;
+  color: var(--corprimaria);
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+nav #responsivo #botao_menu:hover {
+  opacity: 0.5;
+}
+
+section {
+  padding: 10px;
+  padding-top: 50px;
+}
+
+section h1 {
+  text-align: center;
+}
+
+h1 {
+  font-size: 50px;
+  word-wrap: break-word;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+
+section#inicial {
+  padding-top: 100px;
+  padding-right: 0px;
+}
+
+section#inicial h1 {
+  text-align: left;
+}
+
+section#inicial h1 span {
+  color: var(--fundo);
+  background: var(--corsecundaria);
+}
+
+#foto_inicial {
+  width: 850px;
+  height: 700px;
+  float: right;
+  margin-top: -50px;
+  background-image: url(https://www.imagensempng.com.br/wp-content/uploads/2021/06/02-25.png);
+  background-size: 97% 80%;
+  background-repeat: no-repeat;
+  background-position:
+    center;
+  cursor: pointer;
+}
+
+section#aviso {
+  color: white;
+  background: var(--corsecundaria);
+  height: 200px;
+}
+
+section#aviso button {
+  background-color: white;
+  color: var(--corsecundaria);
+}
+
+section#cardapio,
+section#promocoes {
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+section#cardapio .container,
+section#promocoes .container {
+  flex-wrap: wrap;
+}
+
+.box_produto {
+  width: 300px;
+  height: 340px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  background-color: white;
+  box-shadow: -1px 1px 20px #0000000f;
+}
+
+.box_produto .topo {
+  width: 100%;
+  height: 80px;
+  padding-top: 25px;
+  background-color: var(--corsecundaria);
+}
+
+.box_produto .topo .imagem {
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  border: 1px solid silver;
+  margin-left: 70px;
+}
+
+.box_produto .info {
+  margin-top: 80px;
+  text-align: center;
+  padding: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.box_produto .info p {
+  height: fit-content;
+  max-height: 40px;
+  overflow-y: scroll;
+}
+
+.box_produto button {
+  margin-left: 110px;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+  border: none;
+  background-color: var(--corsecundaria);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+button:hover {
+  box-shadow: inset 0px -100px 0 #0000002e;
+}
+
+footer {
+  margin-top: 50px;
+  padding: 10px;
+  color: var(--corprimaria);
+  font-size: 14px;
+  text-align: center;
+}
+
+section#localizacao {
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+section#localizacao .container {
+  flex-wrap: wrap;
+}
+
+.box_unidade {
+  width: 350px;
+  height: fit-content;
+  min-height: 380px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: white;
+  box-shadow: -1px 1px 20px #0000000f;
+  text-align: justify;
+  overflow: hidden;
+}
+
+.box_unidade p {
+  font-size: 15px;
+}
+
+.box_unidade img {
+  width: 355px;
+  height: 200px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+section#sobre p {
+  text-align: justify;
+}
+
+section#sobre .linhadotempo {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.custom-link {
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #0f0f10;
+}
+
+.custom-link:hover {
+  color: #299f0b;
+}
+
+section#sobre .linhadotempo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background-color: silver;
+}
+
+section#sobre .linhadotempo .box_evento {
+  position: relative;
+  padding: 40px 20px;
+}
+
+section#sobre .linhadotempo .box_evento h2 {
+  text-align: center;
+  background: var(--fundo);
+}
+
+section#sobre .linhadotempo .box_evento::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: silver;
+}
+
+section#sobre .linhadotempo .box_evento .data {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+section#sobre .linhadotempo .box_evento .conteudo {
+  padding: 10px;
+  background-color: var(--fundo);
+  color: var(--corprimaria);
+  box-shadow: -1px 1px 20px #0000000f;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+section#sobre .linhadotempo .box_evento .conteudo:hover {
+  background-color: var(--corsecundaria);
+  color: white;
+}
+
+section#sobre .linhadotempo .box_evento .conteudo h3 {
+  text-align: center;
+}
+
+section#login .box_login {
+  width: 380px;
+  min-height: 400px;
+  height: fit-content;
+  border: 1px solid #0000000f;
+  box-shadow: 0px 0px 14px #0000000f;
+}
+
+section#login .container label {
+  font-size: 13px;
+}
+
+section#login .container .opcoes {
+  padding: 15px;
+}
+
+section#login .container .opcoes span {
+  font-family: 'Poppins', sans-serif;
+  border: none;
+  color: var(--corsecundaria);
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.25s;
+  cursor: pointer;
+  font-size: 0px;
+}
+
+section#login .container .opcoes span i {
+  color: var(--corprimaria);
+  font-size: 13px;
+}
+
+section#login .container .opcoes span:hover {
+  background-color: white;
+  font-size: 13px;
+}
+
+section#login .container .opcoes span:hover a,
+section#login .container .opcoes span:hover i {
+  color: var(--corsecundaria);
+}
+
+section#login .box_login .esquerda {
+  background-image: url(https://i.imgur.com/i9BVS2J.png);
+  background-size: cover;
+  width: 30%;
+  height: 401px;
+  float: left;
+  display: block;
+}
+
+section#login .box_login button {
+  margin-bottom: 10px;
+}
+
+section#login .box_login a {
+  font-size: 12px;
+}
+
+section#login .box_login .direita {
+  background-color: white;
+  min-height: 400px;
+  width: 70%;
+  height: 100%;
+  float: right;
+}
+
+section#login .box_login .direita .logo {
+  width: 100px;
+  height: 100px;
+  background-image: url(https://i.imgur.com/z0oKU2l.png);
+  background-size: contain;
+  border-radius: 50%;
+  margin-left: 30%;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+section#login .box_login .direita .logo:hover {
+  opacity: 0.5;
+}
+
+section#login .box_login .direita ul {
+  list-style: none;
+}
+
+section#login .box_login .direita ul li {
+  padding: 10px;
+  margin-top: 10px;
+}
+
+section#login .box_login#cadastro .esquerda {
+  background-image: url(https://i.imgur.com/i9BVS2J.png);
+  background-size: cover;
+  width: 30%;
+  height: 744px;
+  float: left;
+  display: block;
+}
+
+body#admin section#login .direita center span {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 7px;
+  margin-top: 10px;
+}
+
+input {
+  max-width: 180px;
+  padding: 10px;
+  border: none;
+  background-color: #f7f7f7;
+  color: #0b0b0b;
+  font-family: 'Poppins', sans-serif;
+}
+
+section#pedidos {
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+section#pedidos .container {
+  flex-wrap: wrap;
+}
+
+
+section#pedidos .box_pedido {
+  width: 250px;
+  min-height: 150px; /* Ajusta a altura mínima para melhor layout */
+  padding: 20px;
+  margin: 0;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
+  box-sizing: border-box; /* Inclui padding e border na largura e altura total */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+section#pedidos .box_pedido h5 {
+  font-size: 1.0rem;
+  color: #333;
+  margin: 0 0 10px;
+}
+
+section#pedidos .box_pedido p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
+#Sem_Historico {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  color: #666;
+}
+
+
+
+section#configuracoes ul {
+  list-style: none;
+  margin-left: -50px;
+}
+
+section#configuracoes ul li input {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    overflow: hidden;
+  }
+
+  nav #responsivo {
+    display: block;
+  }
+
+  nav #normal {
+    display: none;
+  }
+
+  nav #normal .logo {
+    display: none;
+  }
+
+  section#pedidos .container {
+    align-items: center;
+  }
+
+  section#cardapio .container,
+  section#promocoes .container {
+    align-items: center;
+  }
+
+  section#localizacao .container {
+    align-items: center;
+  }
+
+  section#configuracoes .container {
+    align-items: center;
+  }
+
+  section#login .container {
+    align-items: center;
+  }
+
+  section#login .box_login {
+    width: 280px;
+  }
+
+  section#login .box_login .esquerda {
+    width: 0%;
+    display: none;
+  }
+
+  section#login .box_login#cadastro .esquerda {
+    width: 0%;
+    display: none;
+  }
+
+  section#login .box_login .direita {
+    width: 100%;
+  }
+
+  #foto_inicial {
+    width: 850px;
+    height: 700px;
+    float: right;
+    margin-top: -250px;
+    background-image: url(https://www.imagensempng.com.br/wp-content/uploads/2021/06/02-25.png);
+    background-size: 85%;
+    background-position:
+      bottom;
+    transition:
+      0.5s;
+    cursor: pointer;
+  }
+}
+
+#popup {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0.402);
+  display: none;
+}
+
+#popup .container {
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#popup .container span#botao_close {
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+#popup .container article {
+  width: 200px;
+  padding: 15px;
+  background-color: white;
+  text-align: center;
+}
+
+#popup .container article span {
+  font-size: 30px;
+}
+
+#popup .container article h1 {
+  font-size: 20px;
+}
+
+#popup .container article p {
+  max-width: 240px;
+  height: 90px;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+section#pedido .container#botoes {
+  flex-flow: row;
+}
+
+section#pedido .container {
+  flex-flow: column;
+}
+
+section#pedido .container article {
+  width: 90%;
+  height: 100px;
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  box-shadow: -1px 1px 20px #0000000f;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+section#pedido .container article:hover {
+  background-color: var(--corsecundaria);
+  color: white;
+}
+
+section#pedido .container#botoes #botao_comprar {
+  margin: 10px;
+  background-color: #6fc25a;
+}
+
+
+section#pedido .container#botoes #botao_limpar {
+  margin: 10px;
+  background-color: #ff0d0d;
+}
+
+#select_formadepg {
+  border: 2px solid var(--corsecundaria);
+  color: var(--corsecundaria);
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  width: 55%;
+  max-width: 200px;
+  cursor: pointer;
+}
+
+
+form#esqueciSenha {
+  width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+
+  
+
+}
+
+form#esqueciSenha ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+form#esqueciSenha label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+form#esqueciSenha input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  
+}
+
+form#esqueciSenha button#botao_enviar {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form#esqueciSenha button#botao_enviar:hover {
+  background-color: #218838;
+}

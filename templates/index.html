@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}" type="image/ico">
+  <title>Green Burguer - Descubra um novo conceito de gastronomia</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="container" id="responsivo">
+        <div id="botao_menu"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo"></div>
+      </div>
+      <div class="container" id="normal">
+        <div class="logo"></div>
+        <a href="/">Início</a>
+        <a href="{{ url_for('html_routes.cardapio') }}">Cardápio</a>
+        <a href="{{ url_for('html_routes.localizacao') }}">Localização</a>
+        <a id="logado"></a>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    <section id="inicial">
+      <div class="container">
+        <h1>Experimente um novo <br><span id="animacaoSpan"></span><br> de sabor.</h1>
+        <div id="foto_inicial"></div>
+      </div>
+    </section>
+    <section id="promocoes">
+      <h1>Promoções</h1>
+      <div class="container" id="mostrarPromocoes">
+        <article class="box_produto">
+          <div class="topo">
+            <div class="imagem" style="background-image: url(https://i.imgur.com/ea9iuwp.jpg);"></div>
+          </div>
+          <div class="info">
+            <p>Produto de exemplo</p>
+            <h5>R$49,90</h5>
+          </div>
+          <button id="botao_comprar">Comprar</button>
+        </article>
+      </div>
+    </section>
+	<section id="aviso">
+		<div class="container">
+			<article>
+				<h2>Ainda não possui uma conta?</h2>
+        <form action="{{ url_for('html_routes.cadastrar') }}" method="get">
+          <button type="submit">Cadastre-se</button>
+      </form>
+			</article>
+		</div>
+	</section>
+  <section id="cardapio">
+    <h1>Outros pratos</h1>
+    <div class="container" id="mostrarPratos">
+      <article class="box_produto">
+        <div class="topo">
+          <div class="imagem" style="background-image: url(https://i.imgur.com/ea9iuwp.jpg);"></div>
+        </div>
+        <div class="info">
+          <p>Produto de exemplo</p>
+          <h5>R$49,90</h5>
+        </div>
+        <button id="botao_comprar">Comprar</button>
+      </article>
+    </div>
+  </section>
+  </main>
+  <footer>
+    <center>
+      <p>Todos os direitos reservados</p>
+      <div class="itens">
+          <a href=""><i class="fa-brands fa-facebook"></i></a>
+        | <a href=""><i class="fa-brands fa-instagram"></i></a>
+        | <a href=""><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </center>
+  </footer>
+  <script src="{{ url_for('static', filename='assets/js/menu.js') }}" type="module"></script>
+  <script src="{{ url_for('static', filename='assets/js/animacaoPalavra.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/mostrar_pratosepromocoes.js') }}" type="module"></script>
+</body>
+</html>

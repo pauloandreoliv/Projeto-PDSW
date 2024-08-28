@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style_admin.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}" type="image/ico">
+  <title>Green Burguer - Descubra um novo conceito de gastronomia</title>
+</head>
+<body>
+  <header>
+      <nav id="responsivo">
+        <div class="container" id="fixa">
+          <div id="botao_menu"><i class="fa-solid fa-bars"></i></div>
+        </div>
+        <div id="invisivel">
+          <a href="{{ url_for('html_routes.admin_index') }}">Início</a>
+          <a href="{{ url_for('html_routes.admin_pedidosDiario') }}">Pedidos</a>
+          <a href="{{ url_for('html_routes.admin_adicionar') }}">Cardápio</a>
+          <a href="{{ url_for('html_routes.admin_promocoes') }}">Promoções</a>
+          <a href="{{ url_for('html_routes.admin_adicionarMapa') }}">Localização</a>
+          <a id="sair_admin"> Sair</a>
+        </div>
+      </nav>
+  </header>
+  <main>
+    <section id="popup">
+      <div class="container">
+        <span id="botao_close"><i class="fa-solid fa-close"></i></span>
+        <article>
+            <span><i class="fa-solid fa-circle-exclamation"></i></span>
+            <h1>Atenção</h1>
+            <p id="erro_popup"></p>
+        </article>
+      </div>
+    </section>
+    <section class="esquerda" id="esquerda">
+      <div class="logo"></div>
+      <nav>
+        <ul>
+          <a href="{{ url_for('html_routes.admin_index') }}"><li><i class="fa-solid fa-house"></i> Início</li></a>
+          <a href="{{ url_for('html_routes.admin_pedidosDiario') }}"><li><i class="fa-solid fa-receipt"></i> Pedidos</li></a>
+          <a href="{{ url_for('html_routes.admin_adicionar') }}"><li><i class="fa-solid fa-utensils"></i> Cardápio</li></a>
+          <a href="{{ url_for('html_routes.admin_promocoes') }}"><li><i class="fa-solid fa-percent"></i> Promoções</li></a>
+          <a href="{{ url_for('html_routes.admin_adicionarMapa') }}"><li><i class="fa-solid fa-map"></i> Localizaçáo</li></a>
+          
+           <a id="sair_admin_normal"><li><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</li></a>
+          </ul>
+        </nav>
+    </section>
+    <section class="direita">
+      <div class="container">
+        <h1 id="titulo">Olá, seja bem-vindo(a)!</h1>
+      </div>
+      <div class="container">
+        <article class="box_index">
+          <h4>Hoje é</h4>
+          <h2 id="nome_dia">Sexta-feira</h2>
+        </article>
+        <article class="box_index" id="com_img">
+          <h4>Que tal fazer uma promoção?</h4>
+          <a href="admin_promocoes"><button>Criar</button></a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer>
+
+  </footer>
+  <script src="{{ url_for('static', filename='assets/js/menuAdmin.js') }}" type="module"></script>
+  <script src="{{ url_for('static', filename='assets/js/logado_admin.js') }}" type="module"></script>
+</body>
+</html>

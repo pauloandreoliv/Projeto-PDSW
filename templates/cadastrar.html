@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}" type="image/ico">
+  <title>Green Burguer - Descubra um novo conceito de gastronomia</title>
+</head>
+<body>
+  <main>
+	<section id="popup">
+        <div class="container">
+          <span id="botao_close"><i class="fa-solid fa-close"></i></span>
+          <article>
+              <span><i class="fa-solid fa-circle-exclamation"></i></span>
+              <h1>Atenção</h1>
+              <p id="erro_popup"></p>
+          </article>
+        </div>
+    </section>
+    <section id="login">
+      <center><p>
+        Se cadastre e tenha uma melhor experiencia!!
+      </p></center>
+      <div class="container">
+        <div class="opcoes">
+          <span><a href="/"><i class="fa-solid fa-house"></i></a><a href="/"> Início</a></span>
+          <span><a href="{{ url_for('html_routes.entrar') }}"><i class="fa-solid fa-right-to-bracket"></i></a> <a href="{{ url_for('html_routes.entrar') }}">Entrar</a></span>
+        </div>
+      </div>
+      <div class="container">
+        <div class="box_login" id="cadastro">
+          <div class="esquerda"></div>
+          <div class="direita">
+            <div class="logo"></div>
+            <form id="cadastro" name="cadastro">
+              <ul>
+                <li>
+                  <label for="inputnome">Nome</label><br>
+                  <input type="text" placeholder="Seu nome" id="inputnome" name="inputnome" pattern="^[a-zA-Z\s]+$" required>
+                </li>
+                <li>
+                  <label for="inputcpf">CPF</label><br>
+                  <input type="text" placeholder="Seu CPF" id="inputcpf" name="inputcpf" pattern="^\d{3}\.\d{3}\.\d{3}-\d{2}$" required>
+                </li>
+                <li>
+                  <label for="inputendereco">Endereço</label><br>
+                  <input type="text" placeholder="Seu Endereço" id="inputendereco" name="inputendereco">
+                </li>
+                <li>
+                  <label for="inputtelefone">Celular</label><br>
+                  <input type="text" placeholder="Seu número" id="inputtelefone" name="inputtelefone" pattern="^\(\d{2}\)\s\d{5}-\d{4}$" required>
+                </li>
+                <li>
+                  <label for="inputemail">E-mail</label><br>
+                  <input type="email" placeholder="Seu e-mail" id="inputemail" name="inputemail" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+                </li>
+                <li>
+                  <label for="inputsenha">Senha</label><br>
+                  <input type="password" placeholder="Sua senha" id="inputsenha" name="inputsenha" pattern="^.{8,}$" required>
+                </li>
+              </ul>
+              <center>
+                <form action="{{ url_for('html_routes.entrar') }}" method="get">
+                  <button id="botao_enviar">Cadastrar</button><br>
+              </form>
+              </center>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <center>
+      <p>Todos os direitos reservados</p>
+      <div class="itens">
+          <a href=""><i class="fa-brands fa-facebook"></i></a>
+        | <a href=""><i class="fa-brands fa-instagram"></i></a>
+        | <a href=""><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </center>
+  </footer>
+  <script src="{{ url_for('static', filename='assets/js/inserir_usuario.js') }}" type="module"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="module"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+  <script type="text/javascript">
+    $("#inputtelefone").mask("(00) 00000-0000");
+	  $("#inputcpf").mask("000.000.000-00");
+   </script>
+</body>
+</html>

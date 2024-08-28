@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}" type="image/ico">
+  <title>Green Burguer - Descubra um novo conceito de gastronomia</title>
+</head>
+<body class="body-esqueciEmail">
+  <main>
+	<section id="popup">
+        <div class="container">
+          <span id="botao_close"><i class="fa-solid fa-close"></i></span>
+          <article>
+              <span><i class="fa-solid fa-circle-exclamation"></i></span>
+              <h1>Atenção</h1>
+              <p id="erro_popup"></p>
+          </article>
+        </div>
+    </section>
+    <section id="login">
+      <center>
+        <h5>Escreva seu e-mail para que possamos enviar sua nova senha!!</h5>
+      </center>
+      <div class="container">
+        
+        <div class="opcoes">
+          <a href="/"><span><i class="fa-solid fa-house"></i> Início</span></a>
+        </div>
+      </div>
+      <div class="container">
+        <div class="box_login">
+          
+            <form id="esqueciSenha" name="esqueciSenha">
+              <ul>
+                  <label for="inputemail">E-mail</label><br>
+                  <input type="email" placeholder="Seu e-mail" id="inputemail" name="inputemail" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+                </li>
+                <li>
+              <center>
+                <form action="{{ url_for('html_routes.entrar') }}" method="get">
+                  <button id="botao_enviar">Enviar e-mail</button><br>
+              </form>
+              </center>
+      </div>
+    </section>
+  </main>
+  <footer>
+    
+  </footer>
+  <script src="{{ url_for('static', filename='assets/js/EnvioDeEmail.js') }}" type="module"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+  <script type="text/javascript">
+	$("#inputcpf").mask("000.000.000-00");
+   </script>
+</body>
+</html>
