@@ -28,15 +28,20 @@ cadastrarButton.addEventListener('click', (event) => {
     } else {
       
       fetch(`/check_cpf/${inputCPF}`)
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erro ao verificar CPF.');
+          }
+          return response.json();
+        })
         .then(data => {
           if (data.exists) {
+            mostrarPopup('Cadastrado com sucesso');
             setTimeout(() => {
               window.location.href = "/entrar";  
             }, 2000);
             throw new Error("Este CPF já está cadastrado.");
           } else {
-            
             const dados = {
               nome: inputNome,
               cpf: inputCPF,
@@ -55,7 +60,12 @@ cadastrarButton.addEventListener('click', (event) => {
             });
           }
         })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erro ao cadastrar usuário.');
+          }
+          return response.json();
+        })
         .then(() => {
           mostrarPopup('Cadastrado com sucesso');
           setTimeout(() => {
