@@ -90,7 +90,7 @@ O Teste foi Feito na validação do Token de Usuario.
 ## 📎 Links Adicionais
 
 - [https://drive.google.com/drive/folders/1VPuwDWl3iuWWGSMvilQN4vF-3c7zzzp8?usp=sharing](#)
-- [https://docs.google.com/document/d/1MLy9M4Fc8zIEifQRnw--Z7irv7Kk7f-9/edit)(#)
+- [https://docs.google.com/document/d/1MLy9M4Fc8zIEifQRnw--Z7irv7Kk7f-9/edit](#)
 
 
 ##  📥 Comandos pip install e Importações do Projeto
