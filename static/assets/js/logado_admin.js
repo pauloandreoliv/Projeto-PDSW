@@ -1,8 +1,37 @@
+import { mostrarPopup } from "./popup.js";
+
+
 const titulo = document.getElementById("titulo");
 const nomeDia = document.getElementById("nome_dia");
 const logadoAdmin = localStorage.getItem('logadoAdmin');
 
-function redirecionar(){
+
+
+async function verificarToken() {
+    
+        const response = await fetch('/check_Token');
+        if (!response.ok) {
+            if (response.status === 401) {
+                
+                localStorage.clear();
+                mostrarPopup("Token expirado")
+                setTimeout(() => { window.location.href = "/admin"; }, 2000);
+                
+                return false;
+            }
+        }
+        return true;
+}
+
+async function redirecionar(){
+    const tokenValido = await verificarToken();
+    if (!tokenValido) {
+        
+        mostrarPopup("teste");
+        return
+    }
+       
+
     if (logadoAdmin == null) {
         var caminho = window.location.href;
   
@@ -26,8 +55,16 @@ function inserirData() {
     nomeDia.textContent = dia;
 }
 
-window.addEventListener('load', function() {
-    redirecionar();
+window.addEventListener('load', async function() {
+    // Verifica o token antes de qualquer outra coisa
+    const tokenValido = await verificarToken();
+    if (!tokenValido) {
+        
+
+        return ; 
+    }
+
+    await redirecionar();
     var caminho = window.location.href;
     if (caminho.includes('/admin_index')){
         alterarTitulo();
@@ -37,20 +74,15 @@ window.addEventListener('load', function() {
 
 const sair = document.getElementById("sair_admin");
 sair.addEventListener('click', (event) => {
-	
-  event.preventDefault();
-
-  localStorage.clear();
-
-  window.location.href = "/admin";
+    event.preventDefault();
+    
+    localStorage.clear();
+    window.location.href = "/admin";
 });
 
 const sairnormal = document.getElementById("sair_admin_normal");
 sairnormal.addEventListener('click', (event) => {
-	
-  event.preventDefault();
-
-  localStorage.clear();
-
-  window.location.href = "/admin";
+    event.preventDefault();
+    localStorage.clear();
+    window.location.href = "/admin";
 });

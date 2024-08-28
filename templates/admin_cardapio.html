@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style_admin.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}" type="image/ico">
-  <title>Restaurante - Descubra um novo conceito de gastronomia</title>
+  <title>Green Burguer - Descubra um novo conceito de gastronomia</title>
 </head>
 <body>
     <header>
@@ -19,7 +19,7 @@
         </div>
         <div id="invisivel">
           <a href="{{ url_for('html_routes.admin_index') }}">Início</a>
-          <a href="{{ url_for('html_routes.admin_pedidos') }}">Pedidos</a>
+          <a href="{{ url_for('html_routes.admin_pedidosDiario') }}">Pedidos</a>
           <a href="{{ url_for('html_routes.admin_adicionar') }}">Adicionar</a>
           <a href="{{ url_for('html_routes.admin_cardapio') }}">Cardápio</a>
           <a href="{{ url_for('html_routes.admin_promocoes') }}">Promoções</a>
@@ -44,7 +44,7 @@
       <nav>
         <ul>
           <a href="{{ url_for('html_routes.admin_index') }}"><li><i class="fa-solid fa-house"></i> Início</li></a>
-          <a href="{{ url_for('html_routes.admin_pedidos') }}"><li><i class="fa-solid fa-receipt"></i> Pedidos</li></a>
+          <a href="{{ url_for('html_routes.admin_pedidosDiario') }}"><li><i class="fa-solid fa-receipt"></i> Pedidos</li></a>
           <a href="{{ url_for('html_routes.admin_cardapio') }}"><li><i class="fa-solid fa-utensils"></i> Cardápio</li></a>
           <a href="{{ url_for('html_routes.admin_promocoes') }}"><li><i class="fa-solid fa-percent"></i> Promoções</li></a>
           <a href="{{ url_for('html_routes.admin_adicionarMapa') }}"><li><i class="fa-solid fa-map"></i> Localizaçáo</li></a>
@@ -70,8 +70,8 @@
       <p>Todos os direitos reservados</p>
     </center>
   </footer>
-  <script src="{{ url_for('static', filename='assets/js/menuAdmin.js') }}"></script>
-  <script src="{{ url_for('static', filename='assets/js/logado_admin.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/menuAdmin.js') }}" type="module"></script>
+  <script src="{{ url_for('static', filename='assets/js/logado_admin.js') }}"type="module"></script>
   <script src="{{ url_for('static', filename='assets/js/mostrar_pratosepromocoes.js') }}" type="module"></script>
   <script src="{{ url_for('static', filename='assets/js/excluir_item.js') }}" type="module"></script>
 </body>

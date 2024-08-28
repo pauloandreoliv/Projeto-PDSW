@@ -1,68 +1,61 @@
 import { mostrarPopup } from "./popup.js";
-function buscarHistoricoPedidos() {
+async function buscarHistoricoPedidos() {
     const id = localStorage.getItem("cpf");
-
     if (!id) {
         console.error("CPF não encontrado no localStorage.");
         return;
     }
 
-    fetch(`/historico/${id}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 401) {
-                    localStorage.clear()
-                    mostrarPopup('Token Expirado');
-                    return Promise.reject('Token expirado');
-                }
-                return response.text().then(text => {
-                    throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}. ${text}`);
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            const historico = data.historico;
+    try {
+        const response = await fetch(`/historico/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-            console.log(historico); 
+        if (!response.ok) {
+            if (response.status === 401) {
+                localStorage.clear();
+                mostrarPopup("Token Expirado");
+                setTimeout(() => { window.location.href = "/entrar"; }, 3000);
+                return;
+            }    
+        }
 
-            const container = document.getElementById("mostrarPedidos");
-            container.innerHTML = "";
+        const data = await response.json();
+        const historico = data.historico;
+        const container = document.getElementById("mostrarPedidos");
+        container.innerHTML = "";
 
-            if (!Array.isArray(historico) || historico.length === 0) {
-                container.innerHTML = `
-                    <article id="Sem_Historico">
-                        <h4>Você ainda não fez pedidos :(</h4>
-                        <h5>Que tal provar algo novo?</h5>
-                    </article>`;
-            } else {
-                historico.forEach(pedido => {
-                    const valorTotal = pedido.total || 0;
-                    const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
-                    const dataPedido = pedido.data;
-                    const formadepgmto = pedido.formadepgmto;
+        if (!Array.isArray(historico) || historico.length === 0) {
+            container.innerHTML = `
+                <article id="Sem_Historico">
+                    <h4>Você ainda não fez pedidos :(</h4>
+                    <h5>Que tal provar algo novo?</h5>
+                </article>`;
+        } else {
+            historico.forEach(pedido => {
+                const valorTotal = pedido.total || 0;
+                const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
+                const dataPedido = pedido.data;
+                const formadepgmto = pedido.formadepgmto;
 
-                    const artigoPedido = document.createElement('article');
-                    artigoPedido.classList.add("box_pedido");
-                    artigoPedido.innerHTML = `
-                        <h5>Data: ${dataPedido}</h5>
-                        <p>Pratos: ${itens.map(item => item.nome).join(", ")}</p>
-                        <h5>Valor: R$ ${valorTotal.toFixed(2)}</h5>
-                        <p>Pagamento: ${formadepgmto}</p>
-                    `;
-                    container.appendChild(artigoPedido);
-                });
-            }
-    })
-    .catch(error => {
+                const artigoPedido = document.createElement('article');
+                artigoPedido.classList.add("box_pedido");
+                artigoPedido.innerHTML = `
+                    <h5>Data: ${dataPedido}</h5>
+                    <p>Pratos: ${itens.map(item => item.nome).join(", ")}</p>
+                    <h5>Valor: R$ ${valorTotal.toFixed(2)}</h5>
+                    <p>Pagamento: ${formadepgmto}</p>
+                `;
+                container.appendChild(artigoPedido);
+            });
+        }
+    } catch (error) {
         console.error("Erro ao buscar o histórico de pedidos:", error);
         mostrarPopup("Erro ao buscar o histórico de pedidos.");
-    });
+    }
 }
 
 function mostrarTudo() {
@@ -72,19 +65,7 @@ function mostrarTudo() {
             'Content-Type': 'application/json',
         },
     })
-    .then(response => {
-        if (!response.ok) {
-            if (response.status === 401) {
-                localStorage.clear()
-                window.location.href = "/entrar";
-                return Promise.reject('Token expirado');
-            }
-            return response.text().then(text => {
-                throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}. ${text}`);
-            });
-        }
-        return response.json();
-    })
+    .then(response => response.json())  
     .then(pedidos => {
         const container = document.getElementById('mostrarPedidosAdmin');
         container.innerHTML = "";
@@ -100,7 +81,7 @@ function mostrarTudo() {
                 const itens = Array.isArray(pedido.pratos) ? pedido.pratos : [];
                 const dataPedido = pedido.data;
                 const endereco = pedido.endereco;
-                const telefone = pedido.telefone_cliente;  // Atualizado
+                const telefone = pedido.telefone_cliente;  
                 const formaDePagamento = pedido.formadepgmto;
 
                 const pedidoDiv = document.createElement('article');
@@ -126,8 +107,6 @@ function mostrarTudo() {
     });
 }
 
-
-
 function mostrarPedidosHoje() {
     fetch('/pedidosHoje', {
         method: 'GET',
@@ -135,25 +114,12 @@ function mostrarPedidosHoje() {
             'Content-Type': 'application/json',
         },
     })
-    .then(response => {
-        if (!response.ok) {
-            if (response.status === 401) {
-                localStorage.clear()
-                window.location.href = "/entrar";
-                return Promise.reject('Token expirado');
-            }
-            return response.text().then(text => {
-                throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}. ${text}`);
-            });
-        }
-        return response.json();
-    })
+    .then(response => response.json())  
     .then(pedidosHoje => {
         console.log("Pedidos de hoje recebidos:", pedidosHoje);
 
         const container = document.getElementById('mostrarPedidosAdmin');
-        container.innerHTML = ""; // Limpa o conteúdo atual
-
+        container.innerHTML = ""; 
         if (pedidosHoje.length === 0) {
             container.innerHTML = `
                 <article id="Sem_Historico">
@@ -191,6 +157,7 @@ function mostrarPedidosHoje() {
     });
 }
 
+
 window.addEventListener('load', function() {
     const caminho = window.location.pathname;
     if (caminho === '/pedidos') {
@@ -205,4 +172,3 @@ window.addEventListener('load', function() {
 });
 
 
-window.onload = buscarHistoricoPedidos;

@@ -1,3 +1,5 @@
+import { mostrarPopup } from "./popup.js";
+
 var logado = localStorage.getItem('logado');
 var linkMenu = document.querySelector('a#logado');
 
@@ -12,6 +14,8 @@ function alterarMenu() {
         }
     }
 }
+
+
 function sair() {
     fetch('/logout', {
         method: 'POST',
@@ -32,11 +36,35 @@ function sair() {
     });
 }
 
-function redirecionar() {
-    if (logado == null) {
-        var caminho = window.location.href;
 
-        if (caminho.includes("/configuracoes") || caminho.includes("/pedidos") || caminho.includes("/comprar")) {
+
+async function verificarToken() {
+    
+    const response = await fetch('/check_Token');
+    if (!response.ok) {
+        if (response.status === 401) {
+            
+            localStorage.clear();
+            mostrarPopup("Token expirado")
+            setTimeout(() => { window.location.href = "/entrar"; }, 2000);
+            
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+async function redirecionar() {
+    const tokenValido = await verificarToken();
+    if (!tokenValido){
+        return;
+    } 
+
+    else if (logado == null) {
+        var caminho = window.location.href;
+        if (caminho.includes("/configuracoes") || caminho.includes("/pedidos") || caminho.includes("/comprar") || caminho.includes("/localizacao_user")) {
             window.location.href = "/entrar";
         }
     }

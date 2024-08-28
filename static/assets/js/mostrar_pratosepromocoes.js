@@ -136,7 +136,7 @@ window.addEventListener('load', function() {
                     <button id="comprar" type="submit">Comprar</button>
                 </form>
                 `;
-                mostrarPromocoes(comprar);
+                
                 mostrarPratos(comprar);
                 
             } else {

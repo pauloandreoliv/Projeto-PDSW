@@ -1,21 +1,7 @@
 import { mostrarPopup } from "./popup.js";
 function carregarDados() {
     fetch('/getUser')
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 401) {
-                    localStorage.clear()
-                    mostrarPopup('Token Expirado');
-                    window.location.href = "/entrar";
-
-                    return;
-                }
-                return response.text().then(text => {
-                    throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}. ${text}`);
-                });
-            }
-            return response.json();
-        })
+        .then(response => response.json())  
         .then(dados => {
             if (dados) {
                 document.forms["configuracoes"]["inputnome"].value = dados.nome || '';
@@ -40,7 +26,6 @@ function atualizarUsuario() {
         email: document.forms["configuracoes"]["inputemail"].value,
     };
 
-   
     const cpf = document.forms["configuracoes"]["inputcpf"].value;
 
     fetch(`/user/${cpf}`, {
@@ -50,27 +35,14 @@ function atualizarUsuario() {
         },
         body: JSON.stringify(novosDados)
     })
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 401) {
-                    localStorage.clear()
-                    mostrarPopup('Token Expirado');
-                    window.location.href = "/entrar";
-                    return;
-                }
-                return response.text().then(text => {
-                    throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}. ${text}`);
-                });
-            }
-            return response.json().then(data => {
-                mostrarPopup('Atualizado com sucesso.');
-            });
+        .then(response => response.json())  
+        .then(data => {
+            mostrarPopup('Atualizado com sucesso.');
         })
         .catch(error => {
             mostrarPopup('Erro ao atualizar: ' + error.message);
         });
 }
-
 document.addEventListener('DOMContentLoaded', () => {
     const atualizarButton = document.getElementById('botao_enviar');
 
@@ -84,5 +56,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// Carregar dados ao abrir a página
 window.onload = carregarDados;

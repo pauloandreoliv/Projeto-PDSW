@@ -59,6 +59,21 @@ def check_login():
 
     else:
         return jsonify({"logged_in": True})
+    
+@api_routes.route('/check_Token', methods=['GET'])
+def check_token():
+    token = request.cookies.get('auth_token')
+    if not token:
+        return jsonify({"error": "Token não encontrado"}), 401  
+    try:
+        token_result = authentication.validar_token(token)
+        if isinstance(token_result, tuple):  
+            return token_result
+        return jsonify(), 200
+    except Exception as e:
+        return f"An Error Occurred: {e}", 401
+
+
   
 #-----------------------------------------Usuer-----------------------------------------------------------------------------
 
@@ -78,11 +93,7 @@ def create_client():
 
 
 @api_routes.route('/user/<cpf>', methods=['PUT'])
-def update_user(cpf):
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401
-    
+def update_user(cpf): 
     try:
         update_data = request.json
         firebase_service.update_user(cpf, update_data)
@@ -107,7 +118,7 @@ def get_usuario():
         else:
             return jsonify({"error": "Usuário não encontrado"}), 404
     except ValueError as e:
-        return jsonify({"error": str(e)}), 401
+        return jsonify({"error": str(e)}), 500
     
 @api_routes.route('/enviarEmail', methods=['POST'])
 def recuperar_senha():
@@ -174,13 +185,7 @@ def create__pedido():
     
 @api_routes.route("/pedidosHoje", methods=['GET'])
 def pedidos_hoje():
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401  
     try:
-        token_result = authentication.validar_token(token)
-        if isinstance(token_result, tuple):  
-            return token_result
         inicio_do_dia = datetime(2024, 8, 25, 0, 0, 0, tzinfo=timezone.utc)
         fim_do_dia = datetime(2024, 8, 25, 23, 59, 59, 999999, tzinfo=timezone.utc)
 
@@ -192,30 +197,17 @@ def pedidos_hoje():
         return jsonify({'message': str(e)}), 500
 
 @api_routes.route('/historico/<cpf>', methods=['GET'])
-def visualizar_historico_produtos(cpf):
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401  
+def visualizar_historico_produtos(cpf):  
     try:
-        token_result = authentication.validar_token(token)
-        if isinstance(token_result, tuple):  
-            return token_result
-
         historico = firebase_service.Get_pedidos(cpf)
         return jsonify({"historico": historico}), 200
     except Exception as e:
-        return f"An Error Occurred: {e}", 401
+        return jsonify({"error": "Token não encontrado"}), 500
     
 
 @api_routes.route('/historicoAdmin', methods=['GET'])
 def historico_admin():
-    token = request.cookies.get('auth_token')
-    if not token:
-        return jsonify({"error": "Token não encontrado"}), 401  
     try:
-        token_result = authentication.validar_token(token)
-        if isinstance(token_result, tuple):  
-            return token_result
         pedidos = firebase_service.get_all_orders()
         if pedidos is None:
             pedidos = [] 
