@@ -103,19 +103,18 @@ def update_user(cpf):
     except Exception as e:
         return f"An Error Occurred: {e}", 500
 
-
 @api_routes.route('/check_cpf/<cpf>', methods=['GET'])
 def check_cpf(cpf):
     try:
-        type = "usuario"
-        dados = firebase_service.FindByCpf(cpf, type)
+        tipo = "usuario"
+        dados = firebase_service.FindByCpf(cpf, tipo)
         
         if not dados:
             return jsonify({"exists": False}), 200  # CPF não cadastrado
         else:
             return jsonify({"exists": True}), 200  # CPF já cadastrado
     except Exception as e:
-        return jsonify({"error": str(e)}), 50
+        return jsonify({"error": str(e)}), 500
 
 
 @api_routes.route('/getUser', methods=['GET'])

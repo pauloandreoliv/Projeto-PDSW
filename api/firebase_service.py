@@ -99,13 +99,14 @@ def FindByCpf(cpf, tipo):
     query = doc_ref.where('cpf', '==', cpf).stream()
     user_docs = list(query)
     if not user_docs:
-        return False, "Usuário não encontrado"
-    else :  
+        return False  # CPF não encontrado
+    else:
         user_doc = user_docs[0]
-        user_data = user_doc.to_dict() 
+        user_data = user_doc.to_dict()
         user_data['id'] = user_doc.id
-        return user_data
-
+        return user_data  # CPF encontrado
+    
+    
 def FindUserById(user_id):
     try:
         usuarios_ref = db.collection('usuario')

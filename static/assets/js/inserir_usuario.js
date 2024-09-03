@@ -36,10 +36,6 @@ cadastrarButton.addEventListener('click', (event) => {
         })
         .then(data => {
           if (data.exists) {
-            mostrarPopup('Cadastrado com sucesso');
-            setTimeout(() => {
-              window.location.href = "/entrar";  
-            }, 2000);
             throw new Error("Este CPF já está cadastrado.");
           } else {
             const dados = {
