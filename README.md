@@ -80,12 +80,12 @@ O Teste foi Feito na validação do Token de Usuario.
 ## Acessos de testes
 
 ### Cliente
-- CPF:300.000.000-00
-- SENHA:senhaSegura123
+- CPF: 300.000.000-00
+- SENHA: senhaSegura123
 
 ### Administrador
-- CPF:000.000.000-00
-- SENHA:senhaSegura123
+- CPF: 000.000.000-00
+- SENHA: senhaSegura123
 
 ## 📎 Links Adicionais
 
