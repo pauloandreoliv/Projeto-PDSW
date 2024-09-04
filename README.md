@@ -77,6 +77,16 @@ O Teste foi Feito na validação do Token de Usuario.
 4. Acesse o site em `http://127.0.0.1:5000/`.
 
 
+## Acessos de testes
+
+### Cliente
+CPF:300.000.000-00
+SENHA:senhaSegura123
+
+### Administrador
+CPF:000.000.000-00
+SENHA:senhaSegura123
+
 ## 📎 Links Adicionais
 
 - [https://drive.google.com/drive/folders/1VPuwDWl3iuWWGSMvilQN4vF-3c7zzzp8?usp=sharing](#)
